@@ -1,0 +1,49 @@
+	cout << "Podaj nazwy plikow z macierzami ktore chcesz wymnozyc" << "\n\n";
+
+	string name;
+
+	matrix::Matrix *matrix1, *matrix2, *matrix_resoult;
+	cout << "Podaj nazwe pierwszego pliku: ";
+	cin >> name;
+
+	matrix1 = new matrix::Matrix();
+	if (!matrix1->load_from_file(name))
+	{
+		cout << "Nie udalo sie otwozyc pliku, program zakonczy teraz dzialanie" << endl;
+		system("pause");
+		return 1;
+	}
+
+	cout << "\n\n";
+	cout << "Podaj nazwe drugiego pliku: ";
+	cin >> name;
+
+	matrix2 = new matrix::Matrix();
+	if (!matrix2->load_from_file(name))
+	{
+		cout << "Nie udalo sie otwozyc pliku, program zakonczy teraz dzialanie" << endl;
+		system("pause");
+		return 1;
+	}
+
+	cout << "\n\n";
+	cout << "Podaj nazwe pliku do ktorego chcesz zapisac wynik: " << endl;
+	cin >> name;
+
+	matrix_resoult = new matrix::Matrix();
+
+
+	*matrix_resoult = *matrix1 * *matrix2;
+	matrix_resoult->write_to_file(name);
+
+	*matrix_resoult = 2 * *matrix1;
+
+	delete matrix1;
+	delete matrix2;
+	delete matrix_resoult;
+
+	cout << "Program pomyslnie zakonczyl dzialanie" << endl;
+	system("pause");
+
+
+	return 0;

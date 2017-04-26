@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\msg%27s">
+      <UniqueIdentifier>{234610f9-5836-48f9-a12e-7397949d40e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\matrix">
+      <UniqueIdentifier>{5fee7374-67ac-4a48-b352-af5cda7e93a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\matrix">
+      <UniqueIdentifier>{28c44749-b158-4809-8981-6e0755ebddb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\matrix\exceptions">
+      <UniqueIdentifier>{300e8870-c77b-4ec0-9620-b1c8d921035a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\system">
+      <UniqueIdentifier>{570df0d3-9b61-4fcb-91ee-c5cddf94a914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\system">
+      <UniqueIdentifier>{8ac8b64d-bd6d-4b5e-a0d2-f3010183d089}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\menu">
+      <UniqueIdentifier>{1e27a03c-df2e-49b0-b24c-9c6186ad4353}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\menu">
+      <UniqueIdentifier>{26987c71-7f0b-4f93-aae2-83a4a58c32b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\menu\exceptions">
+      <UniqueIdentifier>{20502e4c-c04b-46c1-9f1b-d35e4ef47925}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\matrix\exceptions\normal">
+      <UniqueIdentifier>{1c630a7f-979f-400b-aa93-920c67a39c03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\matrix\exceptions\read">
+      <UniqueIdentifier>{6b8535df-6ae0-42ad-892b-39d9f3c4a636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\matrix\math">
+      <UniqueIdentifier>{05bbfb2a-7dfe-4005-8c27-16283eae967d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\matrix\math">
+      <UniqueIdentifier>{65b24fe5-aea5-492a-9355-a897391a9ecb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Program.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Option.cpp">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Source Files\matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixReader.cpp">
+      <Filter>Source Files\matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixWriter.cpp">
+      <Filter>Source Files\matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixMath.cpp">
+      <Filter>Source Files\matrix\math</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixMultiply.cpp">
+      <Filter>Source Files\matrix\math</Filter>
+    </ClCompile>
+    <ClCompile Include="WriteMenu.cpp">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="ReadMenu.cpp">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MatrixException.h">
+      <Filter>Header Files\matrix\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="MsgException.h">
+      <Filter>Header Files\msg%27s</Filter>
+    </ClInclude>
+    <ClInclude Include="Program.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>Header Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Configure.h">
+      <Filter>Header Files\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Header Files\system</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeDefs.h">
+      <Filter>Header Files\system</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuException.h">
+      <Filter>Header Files\menu\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuBadAllocException.h">
+      <Filter>Header Files\menu\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Converter.h">
+      <Filter>Header Files\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Header Files\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Options.h">
+      <Filter>Header Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Msg.h">
+      <Filter>Header Files\msg%27s</Filter>
+    </ClInclude>
+    <ClInclude Include="Debuging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixReader.h">
+      <Filter>Header Files\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixAdditionException.h">
+      <Filter>Header Files\matrix\exceptions\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixBadAllocException.h">
+      <Filter>Header Files\matrix\exceptions\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixMultiplyException.h">
+      <Filter>Header Files\matrix\exceptions\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixNotInitializedException.h">
+      <Filter>Header Files\matrix\exceptions\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixOutOfRangeException.h">
+      <Filter>Header Files\matrix\exceptions\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixUnknowTypeException.h">
+      <Filter>Header Files\matrix\exceptions\normal</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixReadEmptyException.h">
+      <Filter>Header Files\matrix\exceptions\read</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixReadException.h">
+      <Filter>Header Files\matrix\exceptions\read</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixReadSizeException.h">
+      <Filter>Header Files\matrix\exceptions\read</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixReadNotExistsException.h">
+      <Filter>Header Files\matrix\exceptions\read</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixReadNotNumericTypeException.h">
+      <Filter>Header Files\matrix\exceptions\read</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixWriter.h">
+      <Filter>Header Files\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixMath.h">
+      <Filter>Header Files\matrix\math</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixMultiply.h">
+      <Filter>Header Files\matrix\math</Filter>
+    </ClInclude>
+    <ClInclude Include="WriteMenu.h">
+      <Filter>Header Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="ReadMenu.h">
+      <Filter>Header Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
