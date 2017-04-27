@@ -142,6 +142,10 @@ void Buffer::clear_buffers()
 
 	position_.x = position_.y = 0;
 
+
+	if (!SetConsoleTextAttribute(console_, color_))
+		throw console::exception::ConsoleNoHandlerException();
+
 	system("cls");
 }
 
