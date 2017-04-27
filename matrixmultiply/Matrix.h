@@ -41,7 +41,7 @@ namespace matrixm
 			sys::Vector2ui size_;
 			
 			void clear();
-			void copy(Matrix<T>& _matrix);
+			void copy(const Matrix<T>& _matrix);
 		};
 
 		typedef Matrix<char> Matrixc;

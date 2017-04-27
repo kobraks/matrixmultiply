@@ -28,7 +28,7 @@ matrixm::matrix::Matrix<T>::Matrix(const sys::uint& _x, const sys::uint& _y) : M
 }
 
 template <class T>
-matrixm::matrix::Matrix<T>::Matrix(const Matrix& _matrix)
+matrixm::matrix::Matrix<T>::Matrix(const Matrix<T>& _matrix)
 {
 	copy(_matrix);
 }
@@ -73,7 +73,7 @@ matrixm::matrix::Matrix<T>& matrixm::matrix::Matrix<T>::operator=(const Matrix<T
 }
 
 template <class T>
-void matrixm::matrix::Matrix<T>::copy(Matrix<T>& _matrix)
+void matrixm::matrix::Matrix<T>::copy(const matrixm::matrix::Matrix<T>& _matrix)
 {
 	size_ = _matrix.size();
 
@@ -144,7 +144,7 @@ template <class T>
 void matrixm::matrix::Matrix<T>::fill(const T& _value)
 {
 	for (sys::uint i = 0; i < size_.x; i++)
-		std::fill(&matrix_[i][0], &matrix_[i][0] + size_.y);
+		std::fill(&matrix_[i][0], &matrix_[i][0] + size_.y, _value);
 }
 
 template <class T>
@@ -159,24 +159,20 @@ bool matrixm::matrix::Matrix<T>::out_of_range(const sys::uint& _x, const sys::ui
 	return !(_x < size_.x && _y < size_.y);
 }
 
-//ta funkcja nie jest nigdzie wywo³ywana ona s³u¿y tyllko do naprawienia linker exception :p
-//This funcition is not used anywhere its only for fixing the linker problems
-void functionmatrix()
-{
-	matrixm::sys::Vector2ui size(0, 0);
-	matrixm::matrix::Matrix<char> Matrixc(size);
-	matrixm::matrix::Matrix<short> Matrixs(size);
-	matrixm::matrix::Matrix<int> Matrixi(size);
-	matrixm::matrix::Matrix<long> Matrixl(size);
-	matrixm::matrix::Matrix<long long> Matrixll(size);
+//naprawa b³êdu linkera
 
-	matrixm::matrix::Matrix<float> Matrixf(size);
-	matrixm::matrix::Matrix<double> Matrixd(size);
-	matrixm::matrix::Matrix<long double> Matrixld(size);
+template matrixm::matrix::Matrix<char>;
+template matrixm::matrix::Matrix<short>;
+template matrixm::matrix::Matrix<int>;
+template matrixm::matrix::Matrix<long>;
+template matrixm::matrix::Matrix<long long>;
 
-	matrixm::matrix::Matrix<matrixm::sys::uchar> Matrixuc(size);
-	matrixm::matrix::Matrix<matrixm::sys::ushort> Matrixus(size);
-	matrixm::matrix::Matrix<matrixm::sys::uint> Matrixui(size);
-	matrixm::matrix::Matrix<matrixm::sys::ulong> Matrixul(size);
-	matrixm::matrix::Matrix<matrixm::sys::ullong> Matrixull(size);
-}
+template matrixm::matrix::Matrix<float>;
+template matrixm::matrix::Matrix<double>;
+template matrixm::matrix::Matrix<long double>;
+
+template matrixm::matrix::Matrix<matrixm::sys::uchar>;
+template matrixm::matrix::Matrix<matrixm::sys::ushort>;
+template matrixm::matrix::Matrix<matrixm::sys::uint>;
+template matrixm::matrix::Matrix<matrixm::sys::ulong>;
+template matrixm::matrix::Matrix<matrixm::sys::ullong>;

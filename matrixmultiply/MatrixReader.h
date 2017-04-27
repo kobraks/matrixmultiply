@@ -29,16 +29,8 @@ namespace matrixm
 			static bool is_numeric(const std::string& s);
 			static std::string replace(const std::string& _s, const std::string& _to_replace, const std::string& _replace);
 		};
-	}
-}
 
-//naprawa b³êdu linkera
-#include "MatrixReader.cpp"
 
-namespace matrixm
-{
-	namespace matrix
-	{
 		typedef MatrixReader<char> MatrixReaderc;
 		typedef MatrixReader<short> MatrixReaders;
 		typedef MatrixReader<int> MatrixReaderi;
@@ -55,6 +47,6 @@ namespace matrixm
 		typedef MatrixReader<sys::ulong> MatrixReaderul;
 		typedef MatrixReader<sys::ullong> MatrixReaderull;
 	}
-}
 
+}
 

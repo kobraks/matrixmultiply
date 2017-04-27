@@ -139,3 +139,22 @@ std::string matrixm::matrix::MatrixReader<T>::replace(const std::string& _s, con
 
 	return result;
 }
+
+
+
+//Naprawa b³êdu linkera
+template matrixm::matrix::MatrixReader<char>;
+template matrixm::matrix::MatrixReader<short>;
+template matrixm::matrix::MatrixReader<int>;
+template matrixm::matrix::MatrixReader<long>;
+template matrixm::matrix::MatrixReader<long long>;;
+
+template matrixm::matrix::MatrixReader<float>;
+template matrixm::matrix::MatrixReader<double>;
+template matrixm::matrix::MatrixReader<long double>;
+
+template matrixm::matrix::MatrixReader<matrixm::sys::uchar>;
+template matrixm::matrix::MatrixReader<matrixm::sys::ushort>;
+template matrixm::matrix::MatrixReader<matrixm::sys::uint>;
+template matrixm::matrix::MatrixReader<matrixm::sys::ulong>;
+template matrixm::matrix::MatrixReader<matrixm::sys::ullong>;
