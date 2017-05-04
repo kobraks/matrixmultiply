@@ -6,13 +6,14 @@
 #include "Matrix.h"
 #include "Vector2.h"
 #include "TypeDefs.h"
+#include "AbstractMatrixReader.h"
 
 namespace matrixm
 {
 	namespace matrix
 	{
 		template<class T>
-		class MatrixReader
+		class MatrixReader : public AbstractMatrixReader
 		{
 		public:
 			MatrixReader(std::istream& _stream);
@@ -20,14 +21,13 @@ namespace matrixm
 			MatrixReader(const sys::uint& _x, const sys::uint& _y, std::istream& _stream);
 			~MatrixReader();
 		
-			Matrix<T> read();
+			virtual AbstractMatrix* read();
 
 		private:
 			std::vector<T> matrix_;
 			sys::Vector2ui size_;
 
 			static bool is_numeric(const std::string& s);
-			static std::string replace(const std::string& _s, const std::string& _to_replace, const std::string& _replace);
 		};
 
 

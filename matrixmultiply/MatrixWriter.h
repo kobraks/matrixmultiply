@@ -2,16 +2,23 @@
 
 #include <ostream>
 #include "Matrix.h"
+#include "AbstractMatrixWriter.h"
 
 namespace matrixm
 {
 	namespace matrix
 	{
 		template<class T>
-		class MatrixWriter
+		class MatrixWriter : public matrix::AbstractMatrixWriter
 		{
 		public:
-			MatrixWriter(Matrix<T> _matrix, std::ostream& _out);
+			MatrixWriter(std::ostream& _out);
+
+			virtual void write(const AbstractMatrix* _matrix);
+
+		private:
+			std::ostream& out_;
+
 		};
 
 		typedef MatrixWriter<char> MatrixWriterc;

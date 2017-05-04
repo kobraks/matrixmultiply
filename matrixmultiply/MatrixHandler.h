@@ -15,18 +15,21 @@ namespace matrixm
 			MatrixHandler();
 			~MatrixHandler();
 
-			void load(const std::string& _file_name_);
+			void load(const std::string& _file_name);
 			void load();
 
-			Matrixll* get_matrixll(int _index);
-			Matrixld* get_matrixld(int _index);
+			void save(const std::string& _file_name, AbstractMatrix* _matrix);
+			void show(const AbstractMatrix* _matrix);
 
-			std::vector<Matrixll*>::size_type sizell() const;
-			std::vector<Matrixld*>::size_type sizeld() const;
+			AbstractMatrix* get_matrix(const int& _index);
+			void remove_matrix(const int& _index);
+
+			void add_matrix(AbstractMatrix* _matrix);
+
+			int count() const;
 
 		private:
-			std::vector<Matrixll*> matrixl_;
-			std::vector<Matrixld*> matrixld_;
+			std::vector<AbstractMatrix*> matrix_;
 
 			enum Type { INTEGER, FLOATING, UNKNOW };
 

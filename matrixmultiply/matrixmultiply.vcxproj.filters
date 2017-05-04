@@ -200,5 +200,17 @@
     <ClInclude Include="MatrixHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithm.h">
+      <Filter>Header Files\system</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractMatrix.h">
+      <Filter>Header Files\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractMatrixReader.h">
+      <Filter>Header Files\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractMatrixWriter.h">
+      <Filter>Header Files\matrix</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

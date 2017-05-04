@@ -19,3 +19,7 @@
 
 #define MSG_CHOICE_OPTION "Wybrales opcje numer: "
 #define MSG_MENU_BACK "Powrot"
+
+#define MSG_LOAD_FILE_ENTER_NAME "Podaj nazwe pliku w ktory chcesz wczytac (podaj takze rozszezenie): "
+#define MSG_LOAD_SIZE_ENTER "Podaj wielkosc macierzy"
+#define NSG_LOAD_ELEMENT_NUMBER "Podaj element o indeksie: ";

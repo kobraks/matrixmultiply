@@ -1,12 +1,10 @@
 #include "MatrixMath.h"
 
-template <class T, class M, class G>
-matrixm::matrix::math::MatrixMath<T, M, G>::MatrixMath(const Matrix<M>& _matrix, const Matrix<G>& _matrix2) 
+matrixm::matrix::math::MatrixMath::MatrixMath(const AbstractMatrix* _matrix, const AbstractMatrix* _matrix2)
 	: matrix1_(_matrix), matrix2_(_matrix2)
 {}
 
-template <class T, class M, class G>
-matrixm::matrix::math::MatrixMath<T, M, G>::~MatrixMath()
+matrixm::matrix::math::MatrixMath::~MatrixMath()
 {}
 
 

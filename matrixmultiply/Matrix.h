@@ -4,6 +4,8 @@
 #include "TypeDefs.h"
 #include "Exceptions.h"
 
+#include "AbstractMatrix.h"
+
 #include "Debuging.h"
 
 namespace matrixm
@@ -11,7 +13,7 @@ namespace matrixm
 	namespace matrix
 	{
 		template<class T>
-		class Matrix
+		class Matrix : public AbstractMatrix
 		{
 		public:
 			Matrix(const sys::uint& _x, const sys::uint& _y);
@@ -33,6 +35,8 @@ namespace matrixm
 			sys::Vector2ui size() const;
 
 			Matrix<T>& operator=(const Matrix<T>& _matrix);
+
+			std::string type_name() const;
 		protected:
 			bool out_of_range(const sys::uint& _x, const sys::uint& _y) const;
 

@@ -8,17 +8,16 @@ namespace matrixm
 	{
 		namespace math
 		{
-			template <class T, class M, class R>
-			class MatrixMultiply : public MatrixMath<T, M, R>
+			class MatrixMultiply : public MatrixMath
 			{
 			public:
-				MatrixMultiply(const Matrix<M>& _matrix, const Matrix<R>& _matrix2);
+				MatrixMultiply(const AbstractMatrix* _matrix, const AbstractMatrix* _matrix2);
 				virtual ~MatrixMultiply();
 
-				virtual Matrix<T> execute();
+				virtual AbstractMatrix* execute();
 
 			private:
-				static bool can(const Matrix<M>& _matrix, const Matrix<R>& _matrix2);
+				static bool can(const AbstractMatrix* _matrix, const AbstractMatrix* _matrix2);
 			};
 		}
 	}

@@ -159,6 +159,14 @@ bool matrixm::matrix::Matrix<T>::out_of_range(const sys::uint& _x, const sys::ui
 	return !(_x < size_.x && _y < size_.y);
 }
 
+template <class T>
+std::string matrixm::matrix::Matrix<T>::type_name() const
+{
+	return typeid(T).name();
+}
+
+
+#pragma region Linker_Error_fix
 //naprawa b³êdu linkera
 
 template matrixm::matrix::Matrix<char>;
@@ -176,3 +184,5 @@ template matrixm::matrix::Matrix<matrixm::sys::ushort>;
 template matrixm::matrix::Matrix<matrixm::sys::uint>;
 template matrixm::matrix::Matrix<matrixm::sys::ulong>;
 template matrixm::matrix::Matrix<matrixm::sys::ullong>;
+
+#pragma endregion

@@ -7,6 +7,7 @@
 #include "TypeDefs.h"
 #include "Vector2.h"
 #include "exceptions.h"
+#include "Algorithm.h"
 
 template <class T>
 matrixm::matrix::MatrixReader<T>::MatrixReader(std::istream& _stream) : size_(0, 0)
@@ -24,7 +25,7 @@ matrixm::matrix::MatrixReader<T>::MatrixReader(std::istream& _stream) : size_(0,
 
 		while(sstream >> number)
 		{
-			number = replace(number, ",", ".");
+			number = sys::Algorithm::replace(number, ",", ".");
 			
 			if (!is_numeric(number))
 				throw exceptions::MatrixReadNotNumericTypeException();
@@ -82,15 +83,15 @@ matrixm::matrix::MatrixReader<T>::~MatrixReader()
 }
 
 template <class T>
-matrixm::matrix::Matrix<T> matrixm::matrix::MatrixReader<T>::read()
+matrixm::matrix::AbstractMatrix* matrixm::matrix::MatrixReader<T>::read()
 {
-	Matrix<T> matrix(size_);
+	Matrix<T>* matrix = new Matrix<T>(size_);
 	sys::uint x = 0;
 	sys::uint y = 0;
 
 	for(auto curr = matrix_.begin(); curr != matrix_.end(); ++curr)
 	{
-		matrix.set(*curr, x++, y);
+		matrix->set(*curr, x++, y);
 
 		if (x == size_.x)
 		{
@@ -123,24 +124,6 @@ bool matrixm::matrix::MatrixReader<T>::is_numeric(const std::string& s)
 
 	return false;
 }
-
-template <class T>
-std::string matrixm::matrix::MatrixReader<T>::replace(const std::string& _s, const std::string& _to_replace, const std::string& _replace)
-{
-	std::string result;
-
-	std::string::size_type pos = 0;
-	while ((pos = _s.find(_to_replace, pos)) != std::string::npos)
-	{
-		result.insert(result.length(), _s, 0, pos);
-		result += _replace;
-		pos += _to_replace.length() - 1;
-	}
-
-	return result;
-}
-
-
 
 //Naprawa b³êdu linkera
 template matrixm::matrix::MatrixReader<char>;

@@ -16,6 +16,8 @@ matrixm::Program::Program()
 	state_ = STATE::MAIN_MENU;
 	priv_state_ = STATE::NONE;
 	menu_ = choice_menu(state_);
+
+	matrix_handler_ = new matrix::MatrixHandler();
 }
 
 matrixm::Program::Program(const int& argc, char** argv) : Program()
@@ -51,6 +53,7 @@ std::string matrixm::Program::get_argument_value(const std::string& _argument, c
 matrixm::Program::~Program()
 {
 	delete menu_;
+	delete matrix_handler_;
 }
 
 matrixm::menu::Options* matrixm::Program::choice_menu(STATE _state)
@@ -103,6 +106,8 @@ bool matrixm::Program::execute()
 
 			console::Console::clear();
 		}
+		console::Console::clear();
+
 
 		return true;
 	}
@@ -139,14 +144,26 @@ bool matrixm::Program::execute_option(const int& _option)
 	}
 	else if (state_ == STATE::READ_MENU)
 	{
+		std::string name;
+
 		switch(_option)
 		{
 		case 1:
-			//wczytywanie z pliku
+			//load from the file
+
+			//console::Console::clear();
+			//console::Console::print(MSG_LOAD_FILE_ENTER_NAME);
+			//console::Console::swap();
+			console::Console::clear();
+			std::cout << MSG_LOAD_FILE_ENTER_NAME;
+			std::cin >> name;
+
+			matrix_handler_->load(name);
+
 			break;
 
 		case 2:
-			//wczytywanie z konsoli
+			//load from the console
 			break;
 
 		default:

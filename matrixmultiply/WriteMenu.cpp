@@ -5,9 +5,9 @@
 #include "Msg.h"
 #include "Configure.h"
 
-#define READ_MENU { MSG_READMENU_TITLE, MSG_READMENU_OPTION_1, MSG_READMENU_OPTION_2, MSG_MENU_BACK }
+#define WRITE_MENU { MSG_WRITEMENU_TITLE, MSG_WRITEMENU_OPTION_1, MSG_WRITEMENU_OPTION_2, MSG_MENU_BACK }
 
-matrixm::menu::WriteMenu::WriteMenu() : Menu(READ_MENU, STARTED_OPTION)
+matrixm::menu::WriteMenu::WriteMenu() : Menu(WRITE_MENU, STARTED_OPTION)
 {
 	
 }

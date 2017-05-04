@@ -2,6 +2,7 @@
 
 #include <string>
 #include "Options.h"
+#include "MatrixHandler.h"
 
 #include "Debuging.h"
 
@@ -22,6 +23,8 @@ namespace matrixm
 		bool execute_option(const int& _option);
 		static matrixm::menu::Options *choice_menu(STATE _state);
 	private:
+		matrix::MatrixHandler* matrix_handler_;
+
 		STATE priv_state_;
 
 		matrixm::menu::Options *menu_;

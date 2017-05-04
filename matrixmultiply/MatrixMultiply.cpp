@@ -2,29 +2,26 @@
 
 #include "Exceptions.h"
 
-template <class T, class M, class R>
-matrixm::matrix::math::MatrixMultiply<T, M, R>::MatrixMultiply(const Matrix<M>& _matrix, const Matrix<R>& _matrix2)
-	: MatrixMath<T, M, R>(_matrix, _matrix2)
+matrixm::matrix::math::MatrixMultiply::MatrixMultiply(const AbstractMatrix* _matrix, const AbstractMatrix* _matrix2)
+	: MatrixMath(_matrix, _matrix2)
 {
+	
 }
 
-template <class T, class M, class R>
-matrixm::matrix::math::MatrixMultiply<T, M, R>::~MatrixMultiply()
+matrixm::matrix::math::MatrixMultiply::~MatrixMultiply()
 {}
 
-template <class T, class M, class R>
-matrixm::matrix::Matrix<T> matrixm::matrix::math::MatrixMultiply<T, M, R>::execute()
+matrixm::matrix::AbstractMatrix* matrixm::matrix::math::MatrixMultiply::execute()
 {
-	if (!can(matrix1_))
+	if (!can(matrix1_, matrix2_))
 		throw exceptions::MatrixMultiplyException();
 
-	Matrix<T> result();
+	AbstractMatrix* result = nullptr;
 
 	return result;
 }
 
-template <class T, class M, class R>
-bool matrixm::matrix::math::MatrixMultiply<T, M, R>::can(const Matrix<M>& _matrix, const Matrix<R>& _matrix2)
+bool matrixm::matrix::math::MatrixMultiply::can(const AbstractMatrix* _matrix, const AbstractMatrix* _matrix2)
 {
-	return _matrix.size() == 1 || _matrix2.size() == 1 || _matrix.size().x == _matrix2.size().y;
+	return _matrix->size() == 1 || _matrix2->size() == 1 || _matrix->size().x == _matrix2->size().y;
 }

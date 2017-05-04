@@ -8,18 +8,17 @@ namespace matrixm
 	{
 		namespace math
 		{
-			template<class T, class M, class R>
 			class MatrixMath
 			{
 			public:
-				MatrixMath(const Matrix<M>& _matrix, const Matrix<R>& _matrix2);
+				MatrixMath(const AbstractMatrix* _matrix, const AbstractMatrix* _matrix2);
 				virtual ~MatrixMath();
 
-				virtual Matrix<T> execute() = 0;
+				virtual AbstractMatrix* execute() = 0;
 
 			protected:
-				const Matrix<M>& matrix1_;
-				const Matrix<R>& matrix2_;
+				const AbstractMatrix* matrix1_;
+				const AbstractMatrix* matrix2_;
 
 			};
 		}
