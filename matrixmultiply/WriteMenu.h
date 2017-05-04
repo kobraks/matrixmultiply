@@ -11,10 +11,16 @@ namespace matrixm
 		class WriteMenu : public Menu
 		{
 		public:
+			WriteMenu(Options* _parent);
 			WriteMenu();
 			virtual ~WriteMenu();
 
 			void show() override;
+
+			virtual void close();
+
+		private:
+			bool execute_;
 		};
 	}
 }

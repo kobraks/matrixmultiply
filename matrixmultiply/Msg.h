@@ -23,3 +23,8 @@
 #define MSG_LOAD_FILE_ENTER_NAME "Podaj nazwe pliku w ktory chcesz wczytac (podaj takze rozszezenie): "
 #define MSG_LOAD_SIZE_ENTER "Podaj wielkosc macierzy"
 #define NSG_LOAD_ELEMENT_NUMBER "Podaj element o indeksie: ";
+
+#define MSG_LOAD_SUCCESSFULLY "Pomyslnie wczytano plik"
+
+#define MSG_SAVE_FILE_ENTER_NAME "Podaj nazwe pliku do ktorego chcesz zapisac wybrana macierz (podaj takze rozszezenie): "
+#define MSG_SAVE_SECCESSFULLY "Pomyslnie zapisano plik"

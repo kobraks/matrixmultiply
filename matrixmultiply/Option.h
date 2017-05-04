@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <string>
 #include <ostream>
 
@@ -35,6 +36,12 @@ namespace matrixm
 
 			void set_color(int _color);
 
+			void set_on_click_action(std::function<void()> _on_click);
+			void delete_on_click_action();
+			std::function<void()> get_on_click_action() const;
+
+			void on_click();
+
 			Option& operator= (const sys::Vector2i& _vector);
 
 			std::ostream& write(std::ostream& _out) const;
@@ -43,6 +50,8 @@ namespace matrixm
 			std::string name_;
 			sys::Vector2i position_;
 			sys::ushort color_;
+
+			std::function<void()> on_click_;
 		};
 
 		inline std::ostream& operator<< (std::ostream& _out, const Option& _option)

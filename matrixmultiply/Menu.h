@@ -14,11 +14,18 @@ namespace matrixm
 		class Menu : public Options
 		{
 		public:
+			Menu(Options *_parent, std::initializer_list<std::string> _options, const sys::uint& _start_selected);
 			Menu(std::initializer_list<std::string> _options, const sys::uint& _start_selected);
 
 			virtual void show() = 0;
-			virtual int get_selected() const;
-			int size() const;
+			virtual void close() = 0;
+			virtual int selected() const;
+			int count() const;
+
+			Option* get_options() const;
+			Option* get_selected();
+
+			virtual Options* parent();
 
 			virtual ~Menu();
 		protected:
@@ -31,6 +38,7 @@ namespace matrixm
 
 			Option* options_;
 			sys::uint amount_options_;
+			Options* parent_;
 		};
 	};
 }

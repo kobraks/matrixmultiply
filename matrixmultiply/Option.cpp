@@ -7,7 +7,7 @@
 using namespace matrixm;
 using namespace matrixm::menu;
 
-Option::Option() : name_(""), color_(7), position_(sys::Vector2i(0, 0))
+Option::Option() : name_(""), color_(7), position_(sys::Vector2i(0, 0)), on_click_(nullptr)
 {
 }
 
@@ -16,7 +16,7 @@ Option::Option(const std::string& _option_name) : Option(_option_name, sys::Vect
 	
 }
 
-Option::Option(const sys::Vector2i& _position, const sys::ushort& _color) : position_(_position), color_(_color)
+Option::Option(const sys::Vector2i& _position, const sys::ushort& _color) : position_(_position), color_(_color), on_click_(nullptr)
 {
 }
 
@@ -35,6 +35,7 @@ Option::Option(const int& _x, const int& _y, const sys::ushort& _color) : Option
 
 Option::~Option()
 {
+	on_click_ = nullptr;
 }
 
 matrixm::sys::Vector2i Option::get_position() const
@@ -105,4 +106,25 @@ Option& Option::wirte()
 	console::Console::print(get_name());
 
 	return *this;
+}
+
+void Option::delete_on_click_action()
+{
+	on_click_ = nullptr;
+}
+
+std::function<void()> Option::get_on_click_action() const
+{
+	return on_click_;
+}
+
+void Option::set_on_click_action(std::function<void()> _on_click)
+{
+	on_click_ = _on_click;
+}
+
+void Option::on_click()
+{
+	if (on_click_)
+		on_click_();
 }

@@ -11,10 +11,15 @@ namespace matrixm
 		class ReadMenu : public Menu
 		{
 		public:
+			ReadMenu(Options* _parent);
 			ReadMenu();
 			virtual ~ReadMenu();
 
 			void show() override;
+
+			virtual void close();
+		private:
+			bool execute_;
 		};
 	}
 }

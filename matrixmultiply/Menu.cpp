@@ -8,6 +8,11 @@
 #include "Msg.h"
 #include "Console.h"
 
+matrixm::menu::Menu::Menu(Options* _parent, std::initializer_list<std::string> _options, const sys::uint& _start_selected) : Menu(_options, _start_selected)
+{
+	parent_ = _parent;
+}
+
 matrixm::menu::Menu::Menu(std::initializer_list<std::string> _options, const sys::uint& _start_selected)
 : options_(new Option[_options.size() + 1]), amount_options_(_options.size() + 1), selected_(_start_selected)
 {
@@ -25,7 +30,7 @@ matrixm::menu::Menu::Menu(std::initializer_list<std::string> _options, const sys
 				options_[i] = Option(std::to_string(i) + space + *(_options.begin() + i), OPTIONS_POSITION_X, OPTIONS_POSITION_Y(i));
 		}
 
-		options_[amount_options_ - 1] = Option(MSG_CHOICE_OPTION + std::to_string(get_selected()), SELECTED_STRING_POSITION_X, SELECTED_STRING_POSITION_Y(amount_options_ - 1));
+		options_[amount_options_ - 1] = Option(MSG_CHOICE_OPTION + std::to_string(selected()), SELECTED_STRING_POSITION_X, SELECTED_STRING_POSITION_Y(amount_options_ - 1));
 	}
 	catch (std::bad_alloc)
 	{
@@ -40,12 +45,12 @@ matrixm::menu::Menu::~Menu()
 	delete[] options_;
 }
 
-int matrixm::menu::Menu::get_selected() const
+int matrixm::menu::Menu::selected() const
 {
 	return selected_;
 }
 
-int matrixm::menu::Menu::size() const
+int matrixm::menu::Menu::count() const
 {
 	return amount_options_ - 2;
 }
@@ -68,7 +73,7 @@ void matrixm::menu::Menu::select(const int& _key, const int& _min_value, const i
 			selected_ = _key - KEY_0;
 	}
 
-	options_[amount_options_ - 1] = Option(MSG_CHOICE_OPTION + std::to_string(get_selected()), SELECTED_STRING_POSITION_X, SELECTED_STRING_POSITION_Y(amount_options_ - 1));
+	options_[amount_options_ - 1] = Option(MSG_CHOICE_OPTION + std::to_string(selected()), SELECTED_STRING_POSITION_X, SELECTED_STRING_POSITION_Y(amount_options_ - 1));
 }
 
 void matrixm::menu::Menu::draw() const
@@ -85,7 +90,7 @@ void matrixm::menu::Menu::color_selected(const sys::ushort& _selected_color, con
 
 	for (auto current = options_; current != options_ + amount_options_; current++)
 	{
-		if (b == get_selected())
+		if (b == selected())
 			current->set_color(_selected_color);
 		else
 			current->set_color(_unselected_color);
@@ -93,3 +98,18 @@ void matrixm::menu::Menu::color_selected(const sys::ushort& _selected_color, con
 		b++;
 	}
 }
+matrixm::menu::Option* matrixm::menu::Menu::get_options() const
+{
+	return options_;
+}
+
+matrixm::menu::Option* matrixm::menu::Menu::get_selected()
+{
+	return options_ + selected_;
+}
+
+matrixm::menu::Options* matrixm::menu::Menu::parent()
+{
+	return parent_;
+}
+

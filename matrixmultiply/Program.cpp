@@ -1,5 +1,6 @@
 #include "Program.h"
 
+#include <functional>
 #include <iostream>
 
 #include "exceptions.h"
@@ -11,12 +12,110 @@
 #include "MatrixMultiply.h"
 #include "Console.h"
 
+void matrixm::Program::read_file()
+{
+	console::Console::clear();
+	system("cls");
+	std::cout << MSG_LOAD_FILE_ENTER_NAME;
+
+	std::string name;
+	std::cin >> name;
+	std::cout << "\n\n" << MSG_LOAD_SUCCESSFULLY << std::endl;
+
+	matrix_handler_->load(name);
+
+	system("pause");
+	system("cls");
+}
+
+void matrixm::Program::read_console()
+{
+	console::Console::clear();
+	system("cls");
+	std::cout << MSG_SAVE_FILE_ENTER_NAME;
+
+	std::string name;
+	std::cin >> name;
+	std::cout << "\n\n" << MSG_SAVE_SECCESSFULLY << std::endl;
+
+	matrix_handler_->load(name);
+
+	system("pause");
+	system("cls");
+}
+
+void matrixm::Program::write_file()
+{
+	
+}
+
+void matrixm::Program::write_console()
+{
+	
+}
+
+void matrixm::Program::read_menu()
+{
+	priv_state_ = state_;
+	state_ = STATE::READ_MENU;
+	menu_ = new menu::ReadMenu(menu_);
+	auto options = menu_->get_options();
+	options[1].set_on_click_action(std::bind(&Program::read_file, this));
+	options[2].set_on_click_action(std::bind(&Program::read_console, this));
+	options[3].set_on_click_action(std::bind(&Program::back, this));
+
+	console::Console::clear();
+	menu_->show();
+
+	auto parent = menu_->parent();
+	delete menu_;
+	menu_ = parent;
+}
+
+void matrixm::Program::back()
+{
+	std::swap(priv_state_, state_);
+	menu_->close();
+	console::Console::clear();
+}
+
+void matrixm::Program::write_menu()
+{
+	priv_state_ = state_;
+	state_ = STATE::WRITE_MENU;
+	menu_ = new menu::WriteMenu(menu_);
+	auto options = menu_->get_options();
+	options[1].set_on_click_action(std::bind(&Program::write_file, this));
+	options[2].set_on_click_action(std::bind(&Program::write_console, this));
+	options[3].set_on_click_action(std::bind(&Program::back, this));
+
+	console::Console::clear();
+	menu_->show();
+
+	auto parent = menu_->parent();
+	delete menu_;
+	menu_ = parent;
+}
+
+void matrixm::Program::exit()
+{
+	priv_state_ = state_;
+	state_ = STATE::EXIT;
+
+	menu_->close();
+}
+
 matrixm::Program::Program()
 {
 	state_ = STATE::MAIN_MENU;
 	priv_state_ = STATE::NONE;
-	menu_ = choice_menu(state_);
 
+	menu_= new menu::MainMenu();
+	auto options = dynamic_cast<menu::MainMenu&>(*menu_).get_options();
+
+	options[1].set_on_click_action(std::bind(&Program::read_menu, this));
+	options[2].set_on_click_action(std::bind(&Program::write_menu, this));
+	options[5].set_on_click_action(std::bind(&Program::exit, this));
 	matrix_handler_ = new matrix::MatrixHandler();
 }
 
@@ -56,58 +155,12 @@ matrixm::Program::~Program()
 	delete matrix_handler_;
 }
 
-matrixm::menu::Options* matrixm::Program::choice_menu(STATE _state)
-{
-	menu::Options* option;
-
-	try
-	{
-		switch(_state)
-		{
-		case STATE::MAIN_MENU:
-			option = new menu::MainMenu();
-			break;
-
-		case STATE::READ_MENU:
-			option = new menu::ReadMenu();
-			break;
-
-		case STATE::WRITE_MENU:
-			option = new menu::WriteMenu();
-			break;
-
-		default:
-			option = nullptr;
-		}
-	}
-	catch(std::bad_alloc)
-	{
-		throw menu::exceptions::MenuBadAllocException();
-	}
-
-	return option;
-}
-
-
 bool matrixm::Program::execute()
 {
 	try
 	{
-		while(true)
-		{
-			if (menu_)
-			{
-				menu_->show();
-				if (!execute_option(menu_->get_selected()))
-					break;
-			}
-			else break;
-
-
-			console::Console::clear();
-		}
+		menu_->show();
 		console::Console::clear();
-
 
 		return true;
 	}
@@ -115,93 +168,6 @@ bool matrixm::Program::execute()
 	{
 		std::cout << ex.what() << std::endl;
 	}
-
-	return false;
-}
-
-bool matrixm::Program::execute_option(const int& _option)
-{
-	priv_state_ = state_;
-
-	if (state_ == STATE::MAIN_MENU)
-	{
-		switch(_option)
-		{
-		case 1:
-			state_ = STATE::READ_MENU;
-			break;
-		case 2:
-			state_ = STATE::WRITE_MENU;
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
-		case 5:
-			state_ = STATE::EXIT;
-			break;
-		}
-	}
-	else if (state_ == STATE::READ_MENU)
-	{
-		std::string name;
-
-		switch(_option)
-		{
-		case 1:
-			//load from the file
-
-			//console::Console::clear();
-			//console::Console::print(MSG_LOAD_FILE_ENTER_NAME);
-			//console::Console::swap();
-			console::Console::clear();
-			std::cout << MSG_LOAD_FILE_ENTER_NAME;
-			std::cin >> name;
-
-			matrix_handler_->load(name);
-
-			break;
-
-		case 2:
-			//load from the console
-			break;
-
-		default:
-			state_ = STATE::MAIN_MENU;
-			break;
-		}
-	}
-	else if (state_ == STATE::WRITE_MENU)
-	{
-		switch(_option)
-		{
-		case 1:
-			//zapis do pliku
-			break;
-
-		case 2:
-			//wyswietl w konsoli
-			break;
-
-		default:
-			state_ = STATE::MAIN_MENU;
-			break;
-		}
-	}
-
-	if (state_ != priv_state_)
-	{
-		console::Console::swap();
-
-		delete menu_;
-		menu_ = nullptr;
-
-		menu_ = choice_menu(state_);
-	}
-
-
-	if (menu_)
-		return true;
 
 	return false;
 }

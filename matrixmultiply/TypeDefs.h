@@ -9,5 +9,7 @@ namespace matrixm
 		typedef unsigned long ulong;
 		typedef unsigned long long ullong;
 		typedef unsigned int uint;
+
+		typedef void(*on_click)();
 	}
 }
