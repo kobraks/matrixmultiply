@@ -21,9 +21,6 @@ namespace matrixm
 			Matrix(const Matrix& _matrix);
 			virtual ~Matrix();
 
-			T& get(const sys::uint& _x, const sys::uint& _y);
-			T& get(const sys::Vector2ui& _index);
-
 			T get(const sys::uint& _x, const sys::uint& _y) const;
 			T get(const sys::Vector2ui& _index) const;
 
@@ -36,7 +33,10 @@ namespace matrixm
 
 			Matrix<T>& operator=(const Matrix<T>& _matrix);
 
-			std::string type_name() const;
+			virtual std::string type_name() const;
+			virtual void* get(const sys::uint& _x, const sys::uint& _y);
+			virtual size_t get_type_size() const;
+
 		protected:
 			bool out_of_range(const sys::uint& _x, const sys::uint& _y) const;
 

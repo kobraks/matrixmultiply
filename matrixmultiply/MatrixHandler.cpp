@@ -1,8 +1,8 @@
 #include "MatrixHandler.h"
 
 #include "Matrix.h"
-#include "MatrixReader.h"
 #include "MatrixWriter.h"
+#include "MatrixReader.h"
 #include "Exceptions.h"
 #include "Algorithm.h"
 
@@ -31,6 +31,51 @@ void matrixm::matrix::MatrixHandler::load()
 	return;
 }
 
+void matrixm::matrix::MatrixHandler::save(const std::string& _file_name, AbstractMatrix* _matrix)
+{
+	if (!_matrix)
+		throw exceptions::MatrixNotInitializedException();
+
+	std::fstream file(_file_name, std::ios::in);
+	if (!file.good())
+	{
+		file.close();
+		file.open(_file_name, std::ios::in | std::ios::trunc);
+		if (!file.good())
+			throw exceptions::MatrixWriteOpenException();
+	}
+
+	try
+	{
+		AbstractMatrixWriter* mwriter = nullptr;
+
+		if (dynamic_cast<Matrixll*>(_matrix))
+		{
+			mwriter = new MatrixWriterll(file);
+			mwriter->write(_matrix);
+		}
+		else if (dynamic_cast<Matrixld*>(_matrix))
+		{
+
+			mwriter = new MatrixWriterld(file);
+			mwriter->write(_matrix);
+		}
+		else
+		{
+			throw exceptions::MatrixUnknowTypeException();
+		}
+	}
+	catch(exceptions::MatrixUnknowTypeException)
+	{
+		throw exceptions::MatrixUnknowTypeException();
+	}
+	catch(...)
+	{
+		throw exceptions::MatrixBadAllocException();
+	}
+
+}
+
 void matrixm::matrix::MatrixHandler::load(const std::string& _file_name)
 {
 	std::fstream file(_file_name, std::ios::in);
@@ -52,15 +97,15 @@ void matrixm::matrix::MatrixHandler::load(const std::string& _file_name)
 		else if (type == Type::FLOATING)
 			mreader = new MatrixReaderld(stream);
 		else
-			throw exceptions::MatrixUnknowTypeException();
+			throw exceptions::MatrixReadNotNumericTypeException();
 
 		this->matrix_.push_back(mreader->read());
 
 		delete mreader;
 	}
-	catch(exceptions::MatrixUnknowTypeException)
+	catch(exceptions::MatrixReadNotNumericTypeException)
 	{
-		throw exceptions::MatrixUnknowTypeException();
+		throw exceptions::MatrixReadNotNumericTypeException();
 	}
 	catch (...)
 	{

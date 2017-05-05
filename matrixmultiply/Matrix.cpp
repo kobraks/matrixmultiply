@@ -94,7 +94,7 @@ void matrixm::matrix::Matrix<T>::copy(const matrixm::matrix::Matrix<T>& _matrix)
 	}
 }
 
-
+/*
 template <class T>
 T& matrixm::matrix::Matrix<T>::get(const sys::Vector2ui& _index)
 {
@@ -109,6 +109,7 @@ T& matrixm::matrix::Matrix<T>::get(const sys::uint& _x, const sys::uint& _y)
 
 	return matrix_[_x][_y];
 }
+*/
 
 template <class T>
 T matrixm::matrix::Matrix<T>::get(const sys::Vector2ui& _index) const
@@ -164,6 +165,22 @@ std::string matrixm::matrix::Matrix<T>::type_name() const
 {
 	return typeid(T).name();
 }
+
+template <class T>
+void* matrixm::matrix::Matrix<T>::get(const sys::uint& _x, const sys::uint& _y)
+{
+	if (out_of_range(_x, _y))
+		throw exceptions::MatrixOufOfRangeExcption();
+
+	return matrix_[_x] + _y;
+}
+
+template <class T>
+size_t matrixm::matrix::Matrix<T>::get_type_size() const
+{
+	return sizeof(T);
+}
+
 
 
 #pragma region Linker_Error_fix

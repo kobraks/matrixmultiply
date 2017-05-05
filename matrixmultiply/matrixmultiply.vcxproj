@@ -185,6 +185,9 @@
     <ClInclude Include="MatrixReadNotNumericTypeException.h" />
     <ClInclude Include="MatrixReadSizeException.h" />
     <ClInclude Include="MatrixUnknowTypeException.h" />
+    <ClInclude Include="MatrixWriteEmptyMatrixException.h" />
+    <ClInclude Include="MatrixWriteException.h" />
+    <ClInclude Include="MatrixWriteOpenException.h" />
     <ClInclude Include="MatrixWriter.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuBadAllocException.h" />

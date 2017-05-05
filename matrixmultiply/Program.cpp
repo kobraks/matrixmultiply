@@ -20,15 +20,27 @@ void matrixm::Program::read_file()
 
 	std::string name;
 	std::cin >> name;
-	std::cout << "\n\n" << MSG_LOAD_SUCCESSFULLY << std::endl;
 
-	matrix_handler_->load(name);
+	try
+	{
+		matrix_handler_->load(name);
+		std::cout << "\n\n" << MSG_LOAD_SUCCESSFULLY << std::endl;
+
+	}
+	catch(matrix::exceptions::MatrixException ex)
+	{
+		std::cout << ex.what();
+	}
 
 	system("pause");
 	system("cls");
 }
 
 void matrixm::Program::read_console()
+{
+}
+
+void matrixm::Program::write_file()
 {
 	console::Console::clear();
 	system("cls");
@@ -38,15 +50,10 @@ void matrixm::Program::read_console()
 	std::cin >> name;
 	std::cout << "\n\n" << MSG_SAVE_SECCESSFULLY << std::endl;
 
-	matrix_handler_->load(name);
+	//matrix_handler_->save(name);
 
 	system("pause");
 	system("cls");
-}
-
-void matrixm::Program::write_file()
-{
-	
 }
 
 void matrixm::Program::write_console()

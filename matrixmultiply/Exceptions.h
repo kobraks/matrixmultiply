@@ -14,5 +14,9 @@
 #include "MatrixReadNotNumericTypeException.h"
 #include "MatrixReadSizeException.h"
 
+#include "MatrixWriteException.h"
+#include "MatrixWriteOpenException.h"
+#include "MatrixWriteEmptyMatrixException.h"
+
 #include "MenuException.h"
 #include "MenuBadAllocException.h"

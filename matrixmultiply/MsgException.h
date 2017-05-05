@@ -18,7 +18,7 @@
 #define MSG_WRITE_EXCEPTON "Nie udalo sie wypisac maciezy poniewaz: "
 #define MSG_WRITE_UNABLE_EXCEPTION ""
 #define MSG_WRITE_EMPTY_MATRIX_EXCEPTION "Probujesz wypisac pusta macierz"
-#define MSG_WRITE_PERRMISION_EXCEPTION "Nie udalo sie otwozyc pliku prawdopodobnie brak uprawnien"
+#define MSG_WRITE_OPEN_EXCEPTION "Nie udalo sie otwozyc pliku prawdopodobnie brak uprawnien"
 
 #define MSG_PROGRAM_ALLOC_EXCEPTION "Nie udalo sie zaalokowac pamieci dla programu" OUT_OF_RAM
 #define MSG_PROGRAM_UNKNOW_EXCEPTION "Wystapil niezidentyfikowany blad, opis bledu: "

@@ -52,6 +52,9 @@
     <Filter Include="Header Files\matrix\math">
       <UniqueIdentifier>{65b24fe5-aea5-492a-9355-a897391a9ecb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\matrix\exceptions\write">
+      <UniqueIdentifier>{1e3869c3-e5f0-4d80-b678-f765fd506db4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -211,6 +214,15 @@
     </ClInclude>
     <ClInclude Include="AbstractMatrixWriter.h">
       <Filter>Header Files\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixWriteException.h">
+      <Filter>Header Files\matrix\exceptions\write</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixWriteOpenException.h">
+      <Filter>Header Files\matrix\exceptions\write</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixWriteEmptyMatrixException.h">
+      <Filter>Header Files\matrix\exceptions\write</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
