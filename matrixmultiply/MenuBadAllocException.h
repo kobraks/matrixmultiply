@@ -9,7 +9,7 @@ namespace matrixm
 	{
 		namespace exceptions
 		{
-			class MenuBadAllocException : MenuException
+			class MenuBadAllocException : public MenuException
 			{
 			public:
 				MenuBadAllocException() : MenuException(MSG_MENU_BAD_ALLOC_EXCEPTION)

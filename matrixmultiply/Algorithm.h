@@ -1,4 +1,5 @@
 #pragma once
+#include <sstream>
 #include <string>
 
 namespace matrixm
@@ -21,6 +22,19 @@ namespace matrixm
 				}
 
 				return result;
+			}
+
+			template<class T>
+			static bool is_an(const std::string& _value)
+			{
+				T tmp;
+				std::stringstream stream(_value);
+
+				if (stream >> tmp)
+					if (stream.eof())
+						return true;
+
+				return false;
 			}
 		};
 	}

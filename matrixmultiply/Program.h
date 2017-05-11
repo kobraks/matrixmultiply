@@ -31,6 +31,8 @@ namespace matrixm
 		int selected_;
 		matrix::AbstractMatrix **matrix_;
 
+		void remove_matrix(int _index);
+
 		//Functions that are useing in a menu.
 		void back();
 

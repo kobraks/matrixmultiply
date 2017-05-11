@@ -7,6 +7,8 @@
 #include "Vector2.h"
 #include "exceptions.h"
 #include "Algorithm.h"
+#include <ccType>
+#include <algorithm>
 
 matrixm::matrix::MatrixReader::MatrixReader(std::istream& _stream) : size_(0, 0)
 {
@@ -49,6 +51,9 @@ matrixm::matrix::MatrixReader::MatrixReader(const sys::Vector2ui& _size, std::is
 	if (!_stream.good())
 		throw exceptions::MatrixReadEmptyException();
 	
+	if (_size == size_)
+		return;
+
 	std::string number;
 
 	while(_stream >> number)
@@ -59,17 +64,19 @@ matrixm::matrix::MatrixReader::MatrixReader(const sys::Vector2ui& _size, std::is
 		detected_type_ = get_type(number);
 
 		matrix_.push_back(number);
-
 		size_.x++;
+		
 		if (size_.x == _size.x)
 		{
-			size_.y ++;
-			size_.x = 0;
+			if (size_.y < _size.y)
+				size_.y ++;
+			else 
+				break;
+			if (size_ != _size)
+				size_.x = 0;
+			else break;
 		}
 	}
-
-	if (size_ != _size)
-		throw exceptions::MatrixReadSizeException();
 }
 
 
@@ -104,46 +111,17 @@ matrixm::matrix::AbstractMatrix* matrixm::matrix::MatrixReader::read()
 
 bool matrixm::matrix::MatrixReader::is_numeric(const std::string& s)
 {
-	try
-	{
-		std::stoll(s);
-		return true;
-	}
-	catch (...)
-	{}
-
-	try
-	{
-		std::stold(s);
-		return true;
-	}
-	catch (...)
-	{}
-
-	return false;
+	return !s.empty() && std::find_if(s.begin(), s.end(), [](char c) {return !std::isdigit(c) ; }) == s.end();
 }
 
 matrixm::matrix::MatrixReader::Type matrixm::matrix::MatrixReader::get_type(const std::string& _s)
 {
-	try
-	{
-		std::stoll(_s);
-	}
-	catch(...)
-	{
+	if (sys::Algorithm::is_an<int>(_s))
 		return Type::INTEGER;
-	}
-
-	try
-	{
-		std::stold(_s);
-	}
-	catch(...)
-	{
+	else if (sys::Algorithm::is_an<double>(_s))
 		return Type::DOUBLE;
-	}
-
-	return Type::UNDEFINED;
+	else
+		return Type::UNDEFINED;
 }
 
 int matrixm::matrix::MatrixReader::index_of_detected_type() const

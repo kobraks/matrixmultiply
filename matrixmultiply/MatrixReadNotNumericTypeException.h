@@ -9,7 +9,7 @@ namespace matrixm
 	{
 		namespace exceptions
 		{
-			class MatrixReadNotNumericTypeException : MatrixReadException
+			class MatrixReadNotNumericTypeException : public MatrixReadException
 			{
 			public:
 				MatrixReadNotNumericTypeException() : MatrixReadException(MSG_READ_NOT_NUMERIC_TYPE_EXCEPTION)

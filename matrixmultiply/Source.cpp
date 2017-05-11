@@ -1,6 +1,7 @@
 #include <new>
 #include <exception>
 #include <iostream>
+#include <memory>
 
 #include "Program.h"
 #include "MsgException.h"
@@ -12,15 +13,12 @@ int main(int argc, char **argv)
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
-	matrixm::Program* program = nullptr;
-
 	try
 	{
-		program = new matrixm::Program(argc, argv);
+		std::shared_ptr<matrixm::Program> program(new matrixm::Program(argc, argv));
 
 		if (program->execute())
 		{
-			delete program;
 			std::cout << std::endl;
 			system("pause");
 

@@ -21,6 +21,7 @@
 
 #define AMOUT_OF_MATRIX 3
 
+#pragma region menus
 int matrixm::Program::select_matrix()
 {
 	priv_state_ = state_;
@@ -60,6 +61,8 @@ void matrixm::Program::read_file()
 	{
 		std::fstream file(name, std::ios::in);
 		std::unique_ptr<matrix::MatrixReader> mreader(new matrix::MatrixReader(file));
+
+		remove_matrix(selected_);
 		matrix_[selected_] = mreader->read();
 		file.close();
 
@@ -72,6 +75,8 @@ void matrixm::Program::read_file()
 
 	system("pause");
 	system("cls");
+
+	back();
 }
 
 void matrixm::Program::read_console()
@@ -144,10 +149,14 @@ void matrixm::Program::read_console()
 
 	try
 	{
+		std::unique_ptr<matrix::MatrixReader> mreader(new matrix::MatrixReader(size, std::cin));
+		
+		remove_matrix(selected_);
+		matrix_[selected_] = mreader->read();
 
 		std::cout << MSG_LOAD_SUCCESSFULLY << std::endl;
 	}
-	catch(matrix::exceptions::MatrixException ex)
+	catch(matrix::exceptions::MatrixException& ex)
 	{
 		std::cout << ex.what();
 	}
@@ -155,6 +164,8 @@ void matrixm::Program::read_console()
 
 	system("pause");
 	system("cls");
+
+	back();
 }
 
 void matrixm::Program::write_file()
@@ -175,7 +186,16 @@ void matrixm::Program::write_file()
 
 void matrixm::Program::write_console()
 {
-	
+	if ((selected_ = select_matrix()) < 0)
+		return;
+
+	console::Console::clear();
+	system("cls");
+
+	system("pause");
+	system("cls");
+
+	back();
 }
 
 void matrixm::Program::read_menu()
@@ -228,6 +248,8 @@ void matrixm::Program::exit()
 
 	menu_->close();
 }
+
+#pragma endregion
 
 matrixm::Program::Program()
 {
@@ -282,10 +304,10 @@ std::string matrixm::Program::get_argument_value(const std::string& _argument, c
 matrixm::Program::~Program()
 {
 	for (int i = 0; i < AMOUT_OF_MATRIX; ++i)
-		delete matrix_[i];
-	delete[]matrix_;
+		remove_matrix(i);
 
-	delete []menu_;
+	delete[]matrix_;
+	delete menu_;
 }
 
 bool matrixm::Program::execute()
@@ -303,4 +325,13 @@ bool matrixm::Program::execute()
 	}
 
 	return false;
+}
+
+void matrixm::Program::remove_matrix(int _index)
+{
+	if (_index < 0 || _index > AMOUT_OF_MATRIX)
+		return;
+
+	delete matrix_[_index];
+	matrix_[_index] = nullptr;
 }

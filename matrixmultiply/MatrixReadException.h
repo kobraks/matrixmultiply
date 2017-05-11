@@ -14,7 +14,7 @@ namespace matrixm
 			class MatrixReadException : public MatrixException
 			{
 				public:
-				MatrixReadException(const std::string _message) : MatrixException(MSG_READ_EXCEPTION + _message)
+				explicit MatrixReadException(const std::string& _message) : MatrixException(MSG_READ_EXCEPTION + _message)
 				{}
 			};
 		}

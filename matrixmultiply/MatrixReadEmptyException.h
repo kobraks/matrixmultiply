@@ -9,12 +9,15 @@ namespace matrixm
 	{
 		namespace exceptions
 		{
-			class MatrixReadEmptyException : MatrixReadException
+			class MatrixReadEmptyException : public MatrixReadException
 			{
 			public:
 				MatrixReadEmptyException() : MatrixReadException(MSG_READ_EMPTY_EXCEPTION)
 				{
 				}
+
+				virtual ~MatrixReadEmptyException()
+				{}
 			};
 		}
 	}

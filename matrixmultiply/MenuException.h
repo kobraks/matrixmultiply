@@ -11,7 +11,7 @@ namespace matrixm
 	{
 		namespace exceptions
 		{
-			class MenuException : std::exception
+			class MenuException : public std::exception
 			{
 			public:
 				MenuException(const std::string& _message) : message_(_message)

@@ -23,12 +23,12 @@ namespace matrixm
 				{
 				}
 
-				virtual const char* what() const noexcept
+				virtual const char* what() const throw()
 				{
 					return message_.c_str();
 				}
 
-			private:
+			protected:
 				std::string message_;
 			};
 		}

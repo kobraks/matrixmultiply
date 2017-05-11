@@ -9,7 +9,7 @@ namespace matrixm
 	{
 		namespace exceptions
 		{
-			class MatrixReadSizeException : MatrixReadException
+			class MatrixReadSizeException : public MatrixReadException
 			{
 			public:
 				MatrixReadSizeException() : MatrixReadException(MSG_READ_SIZE_EXCEPTION)
