@@ -17,11 +17,15 @@ namespace matrixm
 		{
 		public:
 			Option();
-			explicit Option(const std::string& _option_name);
-			explicit Option(const sys::Vector2i& _position, const sys::ushort& _color = 7);
-			Option(const int& _x, const int& _y, const sys::ushort& _color = 7);
-			Option(const std::string& _option_name, const sys::Vector2i& _position, const sys::ushort& _color = 7);
-			Option(const std::string& _option_name, const int& _x, const int& _y, const sys::ushort& _color = 7);
+			explicit Option(const std::string& _option_name, bool _selectable = true, std::function<void()> _on_click = nullptr);
+			explicit Option(const sys::Vector2i& _position, const sys::ushort& _color = 7, bool selectable_ = true,
+				std::function<void()> _on_click = nullptr);
+			Option(const int& _x, const int& _y, const sys::ushort& _color = 7, bool selectable_ = true,
+				std::function<void()> _on_click = nullptr);
+			Option(const std::string& _option_name, const sys::Vector2i& _position, const sys::ushort& _color = 7,
+				bool selectable_ = true, std::function<void()> _on_click = nullptr);
+			Option(const std::string& _option_name, const int& _x, const int& _y, const sys::ushort& _color = 7,
+				bool selectable_ = true, std::function<void()> _on_click = nullptr);
 
 			virtual ~Option();
 
@@ -46,7 +50,11 @@ namespace matrixm
 
 			std::ostream& write(std::ostream& _out) const;
 			Option& wirte();
+
+			bool is_selectable();
+			void is_selectable(bool _selectable);
 		private:
+			bool selectable_;
 			std::string name_;
 			sys::Vector2i position_;
 			sys::ushort color_;

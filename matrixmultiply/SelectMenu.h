@@ -8,13 +8,12 @@ namespace matrixm
 {
 	namespace menu
 	{
-		class ReadMenu : public Menu
+		class SelectMenu : public Menu
 		{
 		public:
-			ReadMenu(Options* _parent);
-			ReadMenu();
-			virtual ~ReadMenu();
+			SelectMenu(Options* _parent);
+			SelectMenu();
+			virtual ~SelectMenu();
 		};
 	}
 }
-

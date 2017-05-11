@@ -146,7 +146,6 @@
   <ItemGroup>
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Matrix.cpp" />
-    <ClCompile Include="MatrixHandler.cpp" />
     <ClCompile Include="MatrixMath.cpp" />
     <ClCompile Include="MatrixMultiply.cpp" />
     <ClCompile Include="MatrixReader.cpp" />
@@ -155,13 +154,12 @@
     <ClCompile Include="Option.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="ReadMenu.cpp" />
+    <ClCompile Include="SelectMenu.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="WriteMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractMatrix.h" />
-    <ClInclude Include="AbstractMatrixReader.h" />
-    <ClInclude Include="AbstractMatrixWriter.h" />
     <ClInclude Include="Algorithm.h" />
     <ClInclude Include="Configure.h" />
     <ClInclude Include="Converter.h" />
@@ -171,7 +169,6 @@
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MatrixAdditionException.h" />
     <ClInclude Include="MatrixBadAllocException.h" />
-    <ClInclude Include="MatrixHandler.h" />
     <ClInclude Include="MatrixMath.h" />
     <ClInclude Include="MatrixMultiply.h" />
     <ClInclude Include="MatrixOutOfRangeException.h" />
@@ -198,6 +195,7 @@
     <ClInclude Include="Options.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="ReadMenu.h" />
+    <ClInclude Include="SelectMenu.h" />
     <ClInclude Include="TypeDefs.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="WriteMenu.h" />

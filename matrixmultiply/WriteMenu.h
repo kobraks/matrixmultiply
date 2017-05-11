@@ -14,13 +14,6 @@ namespace matrixm
 			WriteMenu(Options* _parent);
 			WriteMenu();
 			virtual ~WriteMenu();
-
-			void show() override;
-
-			virtual void close();
-
-		private:
-			bool execute_;
 		};
 	}
 }

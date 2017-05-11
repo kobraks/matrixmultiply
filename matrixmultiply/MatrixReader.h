@@ -6,14 +6,16 @@
 #include "Matrix.h"
 #include "Vector2.h"
 #include "TypeDefs.h"
-#include "AbstractMatrixReader.h"
+#include "Converter.h"
 
 namespace matrixm
 {
 	namespace matrix
 	{
-		template<class T>
-		class MatrixReader : public AbstractMatrixReader
+		template <int T>
+		class Type;
+
+		class MatrixReader
 		{
 		public:
 			MatrixReader(std::istream& _stream);
@@ -21,31 +23,68 @@ namespace matrixm
 			MatrixReader(const sys::uint& _x, const sys::uint& _y, std::istream& _stream);
 			~MatrixReader();
 		
-			virtual AbstractMatrix* read();
+			AbstractMatrix* read();
+
+			int index_of_detected_type() const;
+
+		protected:
+			enum class Type {UNDEFINED = 0, INTEGER = 1, DOUBLE};
+			Type detected_type_;
 
 		private:
-			std::vector<T> matrix_;
+			std::vector<std::string> matrix_;
 			sys::Vector2ui size_;
 
 			static bool is_numeric(const std::string& s);
+			static Type get_type(const std::string& _s);
+
+			template<class T>
+			Matrix<T>* create_matrix()
+			{
+				try
+				{
+					Matrix<T>* matrix = new Matrix<T>(size_);
+					sys::uint x = 0;
+					sys::uint y = 0;
+
+					for (auto curr = matrix_.begin(); curr != matrix_.end(); ++curr)
+					{
+						matrix->set(sys::Converter<T>::converts(*curr), x++, y);
+
+						if (x == size_.x)
+						{
+							y++;
+							x = 0;
+						}
+					}
+
+					return matrix;
+				}
+				catch(std::bad_alloc)
+				{
+					throw exceptions::MatrixBadAllocException();
+				}
+			}
 		};
 
+#pragma region Type
+//i only need 2 types but its a realy easy to add more
 
-		typedef MatrixReader<char> MatrixReaderc;
-		typedef MatrixReader<short> MatrixReaders;
-		typedef MatrixReader<int> MatrixReaderi;
-		typedef MatrixReader<long> MatrixReaderl;
-		typedef MatrixReader<long long> MatrixReaderll;
+		template<>
+		class Type<1>
+		{
+		public:
+			typedef long long type;
+		};
 
-		typedef MatrixReader<float> MatrixReaderf;
-		typedef MatrixReader<double> MatrixReaderd;
-		typedef MatrixReader<long double> MatrixReaderld;
+		template<>
+		class Type<2>
+		{
+		public:
+			typedef double type;
+		};
 
-		typedef MatrixReader<sys::uchar> MatrixReaderuc;
-		typedef MatrixReader<sys::ushort> MatrixReaderus;
-		typedef MatrixReader<sys::uint> MatrixReaderui;
-		typedef MatrixReader<sys::ulong> MatrixReaderul;
-		typedef MatrixReader<sys::ullong> MatrixReaderull;
+#pragma endregion
 	}
 
 }

@@ -7,29 +7,33 @@
 using namespace matrixm;
 using namespace matrixm::menu;
 
-Option::Option() : name_(""), color_(7), position_(sys::Vector2i(0, 0)), on_click_(nullptr)
+Option::Option() : selectable_(true), name_(""), position_(sys::Vector2i(0, 0)), color_(7), on_click_(nullptr)
 {
 }
 
-Option::Option(const std::string& _option_name) : Option(_option_name, sys::Vector2i(0, 0))
-{
-	
+Option::Option(const std::string& _option_name, bool _selectable, std::function<void()> _on_click)
+: Option(_option_name, sys::Vector2i(0, 0), 7, _selectable, _on_click)
+{	
 }
 
-Option::Option(const sys::Vector2i& _position, const sys::ushort& _color) : position_(_position), color_(_color), on_click_(nullptr)
+Option::Option(const sys::Vector2i& _position, const sys::ushort& _color, bool _selectable, std::function<void()> _on_click)
+: selectable_(_selectable), position_(_position), color_(_color), on_click_(_on_click)
 {
 }
 
-Option::Option(const std::string& _option_name, const sys::Vector2i& _position, const sys::ushort& _color) : Option(_position, _color)
+Option::Option(const std::string& _option_name, const sys::Vector2i& _position, const sys::ushort& _color, bool _selectable, std::function<void()> _on_click)
+: Option(_position, _color, _selectable, _on_click)
 {
 	name_ = _option_name;
 }
 
-Option::Option(const std::string& _option_name, const int& _x, const int& _y, const sys::ushort& _color) : Option(_option_name, sys::Vector2i(_x, _y), _color)
+Option::Option(const std::string& _option_name, const int& _x, const int& _y, const sys::ushort& _color, bool _selectable, std::function<void()> _on_click)
+: Option(_option_name, sys::Vector2i(_x, _y), _color, _selectable, _on_click)
 {
 }
 
-Option::Option(const int& _x, const int& _y, const sys::ushort& _color) : Option(sys::Vector2i(_x, _y), _color)
+Option::Option(const int& _x, const int& _y, const sys::ushort& _color, bool _selectable, std::function<void()> _on_click)
+: Option(sys::Vector2i(_x, _y), _color, _selectable, _on_click)
 {	
 }
 
@@ -128,3 +132,14 @@ void Option::on_click()
 	if (on_click_)
 		on_click_();
 }
+
+bool Option::is_selectable()
+{
+	return selectable_;
+}
+
+void Option::is_selectable(bool _selectable)
+{
+	selectable_ = _selectable;
+}
+

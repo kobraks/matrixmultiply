@@ -3,14 +3,12 @@
 #include <sstream>
 #include <vector>
 
-#include "Converter.h"
 #include "TypeDefs.h"
 #include "Vector2.h"
 #include "exceptions.h"
 #include "Algorithm.h"
 
-template <class T>
-matrixm::matrix::MatrixReader<T>::MatrixReader(std::istream& _stream) : size_(0, 0)
+matrixm::matrix::MatrixReader::MatrixReader(std::istream& _stream) : size_(0, 0)
 {
 	if (!_stream.good())
 		throw exceptions::MatrixReadEmptyException();
@@ -29,9 +27,11 @@ matrixm::matrix::MatrixReader<T>::MatrixReader(std::istream& _stream) : size_(0,
 			
 			if (!is_numeric(number))
 				throw exceptions::MatrixReadNotNumericTypeException();
+
+			detected_type_ = get_type(number);
 			
 			x++;
-			matrix_.push_back(sys::Converter<T>::converts(number));
+			matrix_.push_back(number);
 		}
 
 		if (size_.x == 0)
@@ -43,8 +43,8 @@ matrixm::matrix::MatrixReader<T>::MatrixReader(std::istream& _stream) : size_(0,
 	}
 }
 
-template <class T>
-matrixm::matrix::MatrixReader<T>::MatrixReader(const sys::Vector2ui& _size, std::istream& _stream) : size_(0, 0)
+
+matrixm::matrix::MatrixReader::MatrixReader(const sys::Vector2ui& _size, std::istream& _stream) : size_(0, 0)
 {
 	if (!_stream.good())
 		throw exceptions::MatrixReadEmptyException();
@@ -56,7 +56,9 @@ matrixm::matrix::MatrixReader<T>::MatrixReader(const sys::Vector2ui& _size, std:
 		if (!is_numeric(number))
 			throw exceptions::MatrixReadNotNumericTypeException();
 
-		matrix_.push_back(sys::Converter<T>::converts(number));
+		detected_type_ = get_type(number);
+
+		matrix_.push_back(number);
 
 		size_.x++;
 		if (size_.x == _size.x)
@@ -70,41 +72,37 @@ matrixm::matrix::MatrixReader<T>::MatrixReader(const sys::Vector2ui& _size, std:
 		throw exceptions::MatrixReadSizeException();
 }
 
-template <class T>
-matrixm::matrix::MatrixReader<T>::MatrixReader(const sys::uint& _x, const sys::uint& _y, std::istream& _stream) 
+
+matrixm::matrix::MatrixReader::MatrixReader(const sys::uint& _x, const sys::uint& _y, std::istream& _stream) 
 	: MatrixReader(sys::Vector2ui(_x, _y), _stream)
 {}
 
-template <class T>
-matrixm::matrix::MatrixReader<T>::~MatrixReader()
+
+matrixm::matrix::MatrixReader::~MatrixReader()
 {
 	matrix_.clear();
 	matrix_.resize(0);
 }
 
-template <class T>
-matrixm::matrix::AbstractMatrix* matrixm::matrix::MatrixReader<T>::read()
+
+matrixm::matrix::AbstractMatrix* matrixm::matrix::MatrixReader::read()
 {
-	Matrix<T>* matrix = new Matrix<T>(size_);
-	sys::uint x = 0;
-	sys::uint y = 0;
-
-	for(auto curr = matrix_.begin(); curr != matrix_.end(); ++curr)
+	switch(detected_type_)
 	{
-		matrix->set(*curr, x++, y);
+	case Type::INTEGER:
+		return create_matrix<matrix::Type<1>::type>();
+		break;
+	case Type::DOUBLE:
+		return create_matrix<matrix::Type<2>::type>();
+		break;
 
-		if (x == size_.x)
-		{
-			y++;
-			x = 0;
-		}
+	default:
+		return nullptr;
 	}
-
-	return matrix;
 }
 
-template <class T>
-bool matrixm::matrix::MatrixReader<T>::is_numeric(const std::string& s)
+
+bool matrixm::matrix::MatrixReader::is_numeric(const std::string& s)
 {
 	try
 	{
@@ -125,19 +123,30 @@ bool matrixm::matrix::MatrixReader<T>::is_numeric(const std::string& s)
 	return false;
 }
 
-//Naprawa b³êdu linkera
-template matrixm::matrix::MatrixReader<char>;
-template matrixm::matrix::MatrixReader<short>;
-template matrixm::matrix::MatrixReader<int>;
-template matrixm::matrix::MatrixReader<long>;
-template matrixm::matrix::MatrixReader<long long>;;
+matrixm::matrix::MatrixReader::Type matrixm::matrix::MatrixReader::get_type(const std::string& _s)
+{
+	try
+	{
+		std::stoll(_s);
+	}
+	catch(...)
+	{
+		return Type::INTEGER;
+	}
 
-template matrixm::matrix::MatrixReader<float>;
-template matrixm::matrix::MatrixReader<double>;
-template matrixm::matrix::MatrixReader<long double>;
+	try
+	{
+		std::stold(_s);
+	}
+	catch(...)
+	{
+		return Type::DOUBLE;
+	}
 
-template matrixm::matrix::MatrixReader<matrixm::sys::uchar>;
-template matrixm::matrix::MatrixReader<matrixm::sys::ushort>;
-template matrixm::matrix::MatrixReader<matrixm::sys::uint>;
-template matrixm::matrix::MatrixReader<matrixm::sys::ulong>;
-template matrixm::matrix::MatrixReader<matrixm::sys::ullong>;
+	return Type::UNDEFINED;
+}
+
+int matrixm::matrix::MatrixReader::index_of_detected_type() const
+{
+	return static_cast<int>(detected_type_);
+}

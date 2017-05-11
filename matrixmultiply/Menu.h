@@ -17,13 +17,14 @@ namespace matrixm
 			Menu(Options *_parent, std::initializer_list<std::string> _options, const sys::uint& _start_selected);
 			Menu(std::initializer_list<std::string> _options, const sys::uint& _start_selected);
 
-			virtual void show() = 0;
-			virtual void close() = 0;
+			virtual void show();
+			virtual void close();
 			virtual int selected() const;
+
 			int count() const;
 
-			Option* get_options() const;
-			Option* get_selected();
+			virtual Option* get_options() const;
+			virtual Option* get_selected();
 
 			virtual Options* parent();
 
@@ -34,6 +35,7 @@ namespace matrixm
 			void select(const int& _key, const int& _min_value, const int& _max_value);
 			void color_selected(const sys::ushort& _selected_color, const sys::ushort& _unselected_color);
 		private:
+			bool execute_;
 			int selected_;
 
 			Option* options_;

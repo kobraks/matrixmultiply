@@ -2,19 +2,18 @@
 
 #include <ostream>
 #include "Matrix.h"
-#include "AbstractMatrixWriter.h"
 
 namespace matrixm
 {
 	namespace matrix
 	{
 		template<class T>
-		class MatrixWriter : public matrix::AbstractMatrixWriter
+		class MatrixWriter
 		{
 		public:
 			MatrixWriter(std::ostream& _out);
 
-			virtual void write(const AbstractMatrix* _matrix);
+			void write(const AbstractMatrix* _matrix);
 
 		private:
 			std::ostream& out_;

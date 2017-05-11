@@ -2,18 +2,53 @@
 
 #include <functional>
 #include <iostream>
+#include <fstream>
+#include <memory>
 
 #include "exceptions.h"
 #include "Msg.h"
 #include "MainMenu.h"
 #include "ReadMenu.h"
 #include "WriteMenu.h"
+#include "SelectMenu.h"
 
 #include "MatrixMultiply.h"
+#include "MatrixReader.h"
+#include "MatrixWriter.h"
+
 #include "Console.h"
+#include "Algorithm.h"
+
+#define AMOUT_OF_MATRIX 3
+
+int matrixm::Program::select_matrix()
+{
+	priv_state_ = state_;
+	state_ = STATE::SELECT_MENU;
+	menu_ = new menu::SelectMenu(menu_);
+	auto options = menu_->get_options();
+
+	int selected = 0;
+
+	options[1].set_on_click_action([this, &selected]() { selected = 0; back(); });
+	options[2].set_on_click_action([this, &selected]() { selected = 1; back(); });
+	options[3].set_on_click_action([this, &selected]() { selected = 2; back(); });
+	options[4].set_on_click_action([this, &selected]() { back(); selected = -1; });
+
+	console::Console::clear();
+	menu_->show();
+
+	auto parent = menu_->parent();
+	delete menu_;
+	menu_ = parent;
+
+	return selected;
+}
 
 void matrixm::Program::read_file()
 {
+	if ((selected_ = select_matrix()) < 0) return;
+
 	console::Console::clear();
 	system("cls");
 	std::cout << MSG_LOAD_FILE_ENTER_NAME;
@@ -23,9 +58,12 @@ void matrixm::Program::read_file()
 
 	try
 	{
-		matrix_handler_->load(name);
-		std::cout << "\n\n" << MSG_LOAD_SUCCESSFULLY << std::endl;
+		std::fstream file(name, std::ios::in);
+		std::unique_ptr<matrix::MatrixReader> mreader(new matrix::MatrixReader(file));
+		matrix_[selected_] = mreader->read();
+		file.close();
 
+		std::cout << "\n\n" << MSG_LOAD_SUCCESSFULLY << std::endl;
 	}
 	catch(matrix::exceptions::MatrixException ex)
 	{
@@ -38,6 +76,85 @@ void matrixm::Program::read_file()
 
 void matrixm::Program::read_console()
 {
+	console::Console::clear();
+	system("cls");
+
+	sys::Vector2ui size;
+
+	while (true)
+	{
+		system("cls");
+		std::string line = "";
+
+		std::cout << MSG_SIZE_GET;
+		std::getline(std::cin, line);
+
+		int pos = 0;
+
+		if ((pos = line.find('x')) == std::string::npos)
+		{
+			try
+			{
+				size.x = std::stoul(line);
+
+			}
+			catch (...)
+			{
+				std::cout << MSG_SIZE_NOT_NUMERIC << std::endl;
+				system("pause");
+
+				continue;
+			}
+
+			std::cin >> size.y;
+			
+			if (std::cin.fail())
+			{
+				std::cout << MSG_SIZE_GET_FALITUDE << std::endl;
+				system("pause");
+
+				continue;
+				
+			}
+			break;
+		}
+		else
+		{
+
+			std::string width, height;
+			width.insert(0, line, 0 , line.length() - pos);
+			height.insert(0, line, pos + 1, line.length() - pos + 1);
+
+			try
+			{
+				size.x = std::stoul(width);
+				size.y = std::stoul(height);
+			}
+			catch(...)
+			{
+				std::cout << MSG_SIZE_NOT_NUMERIC << std::endl;
+				system("pause");
+
+				continue;
+			}
+		}
+
+		break;
+	}
+
+	try
+	{
+
+		std::cout << MSG_LOAD_SUCCESSFULLY << std::endl;
+	}
+	catch(matrix::exceptions::MatrixException ex)
+	{
+		std::cout << ex.what();
+	}
+
+
+	system("pause");
+	system("cls");
 }
 
 void matrixm::Program::write_file()
@@ -123,7 +240,13 @@ matrixm::Program::Program()
 	options[1].set_on_click_action(std::bind(&Program::read_menu, this));
 	options[2].set_on_click_action(std::bind(&Program::write_menu, this));
 	options[5].set_on_click_action(std::bind(&Program::exit, this));
-	matrix_handler_ = new matrix::MatrixHandler();
+
+	matrix_ = new matrix::AbstractMatrix*[AMOUT_OF_MATRIX];
+
+	for (int i = 0; i < AMOUT_OF_MATRIX; ++i)
+		matrix_[i] = nullptr;
+
+	selected_ = 0;
 }
 
 matrixm::Program::Program(const int& argc, char** argv) : Program()
@@ -158,8 +281,11 @@ std::string matrixm::Program::get_argument_value(const std::string& _argument, c
 
 matrixm::Program::~Program()
 {
-	delete menu_;
-	delete matrix_handler_;
+	for (int i = 0; i < AMOUT_OF_MATRIX; ++i)
+		delete matrix_[i];
+	delete[]matrix_;
+
+	delete []menu_;
 }
 
 bool matrixm::Program::execute()

@@ -1,5 +1,6 @@
 #include "Menu.h"
 
+#include <conio.h>
 #include <iostream>
 #include <iomanip>
 
@@ -11,6 +12,7 @@
 matrixm::menu::Menu::Menu(Options* _parent, std::initializer_list<std::string> _options, const sys::uint& _start_selected) : Menu(_options, _start_selected)
 {
 	parent_ = _parent;
+	execute_ = false;
 }
 
 matrixm::menu::Menu::Menu(std::initializer_list<std::string> _options, const sys::uint& _start_selected)
@@ -31,6 +33,8 @@ matrixm::menu::Menu::Menu(std::initializer_list<std::string> _options, const sys
 		}
 
 		options_[amount_options_ - 1] = Option(MSG_CHOICE_OPTION + std::to_string(selected()), SELECTED_STRING_POSITION_X, SELECTED_STRING_POSITION_Y(amount_options_ - 1));
+		execute_ = false;
+
 	}
 	catch (std::bad_alloc)
 	{
@@ -42,6 +46,7 @@ matrixm::menu::Menu::Menu(std::initializer_list<std::string> _options, const sys
 
 matrixm::menu::Menu::~Menu()
 {
+	close();
 	delete[] options_;
 }
 
@@ -113,3 +118,27 @@ matrixm::menu::Options* matrixm::menu::Menu::parent()
 	return parent_;
 }
 
+void matrixm::menu::Menu::show()
+{
+	execute_ = true;
+
+	int key;
+
+	while (execute_)
+	{
+		color_selected(SELECTED_OPTION_COLOR, NO_SELECTED_COLOR);
+		draw();
+
+		key = _getch();
+
+		if (key != KEY_RETURN)
+			select(key, 1, count());
+		else
+			get_selected()->on_click();
+	}
+}
+
+void matrixm::menu::Menu::close()
+{
+	execute_ = false;
+}

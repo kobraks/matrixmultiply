@@ -93,8 +93,8 @@
     <ClCompile Include="ReadMenu.cpp">
       <Filter>Source Files\menu</Filter>
     </ClCompile>
-    <ClCompile Include="MatrixHandler.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="SelectMenu.cpp">
+      <Filter>Source Files\menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,19 +200,10 @@
     <ClInclude Include="ReadMenu.h">
       <Filter>Header Files\menu</Filter>
     </ClInclude>
-    <ClInclude Include="MatrixHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Algorithm.h">
       <Filter>Header Files\system</Filter>
     </ClInclude>
     <ClInclude Include="AbstractMatrix.h">
-      <Filter>Header Files\matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="AbstractMatrixReader.h">
-      <Filter>Header Files\matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="AbstractMatrixWriter.h">
       <Filter>Header Files\matrix</Filter>
     </ClInclude>
     <ClInclude Include="MatrixWriteException.h">
@@ -223,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="MatrixWriteEmptyMatrixException.h">
       <Filter>Header Files\matrix\exceptions\write</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectMenu.h">
+      <Filter>Header Files\menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
