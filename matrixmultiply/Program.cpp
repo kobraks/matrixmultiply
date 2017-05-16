@@ -23,6 +23,41 @@
 #define AMOUT_OF_MATRIX 3
 
 #pragma region menus
+void matrixm::Program::multiply()
+{
+	console::Console::clear();
+	system("cls");
+
+	int m1, m2, m3; //selected matrix x 2, 3th value is an result
+
+	m1 = m2 = m3 = 0;
+
+	if ((m1 = select_matrix()) < 0) return;
+	std::cout << m1 << ": "<< matrix_[m1] << std::endl;
+	system("pause");
+	
+	if ((m2 = select_matrix()) < 0) return;
+	std::cout << m2 << ": " << matrix_[m2] << std::endl;
+	system("pause");
+	if ((m3 = select_matrix()) < 0) return;
+
+	try
+	{
+		std::unique_ptr<matrix::math::MatrixMultiply> m_multiply(new matrix::math::MatrixMultiply(matrix_[m1], matrix_[m2]));
+		auto matrix = matrix_[m3];
+		matrix_[m3] = m_multiply->execute();
+		delete matrix;
+	}
+	catch(std::exception& ex)
+	{
+		std::cout << ex.what() << std::endl;
+	}
+
+	system("pause");
+	system("cls");
+
+}
+
 bool matrixm::Program::choice_menu(const std::string& _ask)
 {
 	console::Console::clear();
@@ -48,14 +83,13 @@ int matrixm::Program::select_matrix()
 	priv_state_ = state_;
 	state_ = STATE::SELECT_MENU;
 	menu_ = new menu::SelectMenu(menu_);
-	auto options = menu_->get_options();
 
 	int selected = 0;
 
 	for (int i = 0; i < 3; i++)
-		options[i]->set_on_click_action([this, &selected, i]() { selected = i; back(); });
+		menu_->get_options()[i+1]->set_on_click_action([this, &selected, i]() { selected = i; back(); });
 
-	options[4]->set_on_click_action([this, &selected]() { back(); selected = -1; });
+	menu_->get_options()[4]->set_on_click_action([this, &selected]() { back(); selected = -1; });
 
 	console::Console::clear();
 	menu_->show();
@@ -344,6 +378,7 @@ matrixm::Program::Program()
 
 	dynamic_cast<menu::MainMenu&>(*menu_).get_option(1)->set_on_click_action(std::bind(&Program::read_menu, this));
 	dynamic_cast<menu::MainMenu&>(*menu_).get_option(2)->set_on_click_action(std::bind(&Program::write_menu, this));
+	dynamic_cast<menu::MainMenu&>(*menu_).get_option(3)->set_on_click_action(std::bind(&Program::multiply, this));
 	dynamic_cast<menu::MainMenu&>(*menu_).get_option(5)->set_on_click_action(std::bind(&Program::exit, this));
 
 	matrix_ = new matrix::AbstractMatrix*[AMOUT_OF_MATRIX];

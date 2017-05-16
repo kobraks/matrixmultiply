@@ -24,6 +24,9 @@ namespace matrixm
 			T get(const sys::uint& _x, const sys::uint& _y) const;
 			T get(const sys::Vector2ui& _index) const;
 
+			T get(const sys::uint& _x, const sys::uint& _y);
+			T get(const sys::Vector2ui& _index);
+
 			void set(const T& _value, const sys::uint& _x, const sys::uint& _y);
 			void set(const T& _value, const sys::Vector2ui& _index);
 
@@ -34,7 +37,6 @@ namespace matrixm
 			Matrix<T>& operator=(const Matrix<T>& _matrix);
 
 			virtual std::string type_name() const;
-			virtual void* get(const sys::uint& _x, const sys::uint& _y);
 			virtual size_t get_type_size() const;
 
 		protected:

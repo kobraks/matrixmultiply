@@ -128,3 +128,31 @@ int matrixm::matrix::MatrixReader::index_of_detected_type() const
 {
 	return static_cast<int>(detected_type_);
 }
+
+template <class T>
+matrixm::matrix::Matrix<T>* matrixm::matrix::MatrixReader::create_matrix()
+{
+	try
+	{
+		Matrix<T>* matrix = new Matrix<T>(size_);
+		sys::uint x = 0;
+		sys::uint y = 0;
+
+		for (auto curr = matrix_.begin(); curr != matrix_.end(); ++curr)
+		{
+			matrix->set(sys::Converter<T>::converts(*curr), x++, y);
+
+			if (x == size_.x)
+			{
+				y++;
+				x = 0;
+			}
+		}
+
+		return matrix;
+	}
+	catch (std::bad_alloc)
+	{
+		throw exceptions::MatrixBadAllocException();
+	}
+}

@@ -94,22 +94,20 @@ void matrixm::matrix::Matrix<T>::copy(const matrixm::matrix::Matrix<T>& _matrix)
 	}
 }
 
-/*
 template <class T>
-T& matrixm::matrix::Matrix<T>::get(const sys::Vector2ui& _index)
+T matrixm::matrix::Matrix<T>::get(const sys::Vector2ui& _index)
 {
 	return get(_index.x, _index.y);
 }
 
 template <class T>
-T& matrixm::matrix::Matrix<T>::get(const sys::uint& _x, const sys::uint& _y)
+T matrixm::matrix::Matrix<T>::get(const sys::uint& _x, const sys::uint& _y)
 {
 	if (out_of_range(_x, _y))
 		throw exceptions::MatrixOufOfRangeExcption();
 
 	return matrix_[_x][_y];
 }
-*/
 
 template <class T>
 T matrixm::matrix::Matrix<T>::get(const sys::Vector2ui& _index) const
@@ -164,15 +162,6 @@ template <class T>
 std::string matrixm::matrix::Matrix<T>::type_name() const
 {
 	return typeid(T).name();
-}
-
-template <class T>
-void* matrixm::matrix::Matrix<T>::get(const sys::uint& _x, const sys::uint& _y)
-{
-	if (out_of_range(_x, _y))
-		throw exceptions::MatrixOufOfRangeExcption();
-
-	return matrix_[_x] + _y;
 }
 
 template <class T>
