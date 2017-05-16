@@ -7,10 +7,12 @@
 
 matrixm::menu::WriteMenu::WriteMenu(Options* _parent) : Menu(_parent, WRITE_MENU, STARTED_OPTION)
 {
+	Menu::get_option(0)->is_selectable(false);
 }
 
 matrixm::menu::WriteMenu::WriteMenu() : Menu(WRITE_MENU, STARTED_OPTION)
 {
+	Menu::get_option(0)->is_selectable(false);
 }
 
 matrixm::menu::WriteMenu::~WriteMenu()

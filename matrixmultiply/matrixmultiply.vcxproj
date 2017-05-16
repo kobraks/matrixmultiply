@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ChoiceMenu.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MatrixMath.cpp" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="AbstractMatrix.h" />
     <ClInclude Include="Algorithm.h" />
+    <ClInclude Include="ChoiceMenu.h" />
     <ClInclude Include="Configure.h" />
     <ClInclude Include="Converter.h" />
     <ClInclude Include="Debuging.h" />

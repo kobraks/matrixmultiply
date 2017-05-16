@@ -9,10 +9,12 @@
 
 matrixm::menu::ReadMenu::ReadMenu(Options *_parent) : Menu(_parent, READ_MENU, STARTED_OPTION)
 {
+	Menu::get_option(0)->is_selectable(false);
 }
 
 matrixm::menu::ReadMenu::ReadMenu() : Menu(READ_MENU, STARTED_OPTION)
 {
+	Menu::get_option(0)->is_selectable(false);
 }
 
 matrixm::menu::ReadMenu::~ReadMenu()

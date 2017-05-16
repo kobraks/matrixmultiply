@@ -8,10 +8,12 @@
 
 matrixm::menu::SelectMenu::SelectMenu(Options *_parent) : Menu(_parent, SELECT_MENU, STARTED_OPTION)
 {
+	Menu::get_option(0)->is_selectable(false);
 }
 
 matrixm::menu::SelectMenu::SelectMenu() : Menu(SELECT_MENU, STARTED_OPTION)
 {
+	Menu::get_option(0)->is_selectable(false);
 }
 
 matrixm::menu::SelectMenu::~SelectMenu()

@@ -16,12 +16,6 @@ namespace matrixm
 			MainMenu(Options* _parent);
 			MainMenu();
 			virtual ~MainMenu();
-			virtual void close();
-
-			void show() override;
-
-		private:
-			bool execute_;
 		};
 	}
 }

@@ -37,3 +37,11 @@
 #define MSG_SIZE_GET "Podaj wielkosc macierzy: "
 #define MSG_SIZE_NOT_NUMERIC "Podana wartosc nie jest wartoscia liczbowa"
 #define MSG_SIZE_GET_FALITUDE "wystapil blad podczas wczytywania danych prosze o powtorne ich wprowadzenie"
+#define MSG_SECOUND_DIMENSION_ENTER "Podaj drugi wymiar macierzy: "
+
+#define MSG_FILE_ALREADY_EXIST "Podany plik ju¿ istnieje."
+
+#define MSG_OVERIDE_FIE "Czy chcesz nadpisac ten plik??"
+
+#define MSG_YES "Tak"
+#define MSG_NO "Nie"

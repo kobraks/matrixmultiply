@@ -111,7 +111,7 @@ matrixm::matrix::AbstractMatrix* matrixm::matrix::MatrixReader::read()
 
 bool matrixm::matrix::MatrixReader::is_numeric(const std::string& s)
 {
-	return !s.empty() && std::find_if(s.begin(), s.end(), [](char c) {return !std::isdigit(c) ; }) == s.end();
+	return !s.empty() && std::find_if(s.begin(), s.end(), [](char c) {return !std::isdigit(c) && c == '.' ; }) == s.end();
 }
 
 matrixm::matrix::MatrixReader::Type matrixm::matrix::MatrixReader::get_type(const std::string& _s)

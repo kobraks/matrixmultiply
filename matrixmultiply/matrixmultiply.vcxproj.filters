@@ -96,6 +96,9 @@
     <ClCompile Include="SelectMenu.cpp">
       <Filter>Source Files\menu</Filter>
     </ClCompile>
+    <ClCompile Include="ChoiceMenu.cpp">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MatrixException.h">
@@ -216,6 +219,9 @@
       <Filter>Header Files\matrix\exceptions\write</Filter>
     </ClInclude>
     <ClInclude Include="SelectMenu.h">
+      <Filter>Header Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="ChoiceMenu.h">
       <Filter>Header Files\menu</Filter>
     </ClInclude>
   </ItemGroup>

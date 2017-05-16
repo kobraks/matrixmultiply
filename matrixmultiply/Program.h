@@ -49,5 +49,7 @@ namespace matrixm
 		void exit();
 		void multiply();
 		void addition();
+
+		bool choice_menu(const std::string& _ask);
 	};
 }

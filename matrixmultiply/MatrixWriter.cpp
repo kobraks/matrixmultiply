@@ -19,7 +19,7 @@ void matrixm::matrix::MatrixWriter<T>::write(const AbstractMatrix* _matrix)
 	for (sys::uint i = 0; i < _matrix->size().y; i++)
 	{
 		for (sys::uint j = 0; j < _matrix->size().x; j++)
-			out_ << matrix->get(j, i) << " ";
+			out_ << *reinterpret_cast<T*>(matrix->get(j, i)) << " ";
 
 		out_ << std::endl;
 	}

@@ -12,38 +12,14 @@
 
 matrixm::menu::MainMenu::MainMenu(Options* _parent) : Menu(_parent, MAIN_MENU, STARTED_OPTION)
 {
-	execute_ = false;
+	Menu::get_option(0)->is_selectable(false);
 }
 
 matrixm::menu::MainMenu::MainMenu() : Menu(MAIN_MENU, STARTED_OPTION)
 {
-	execute_ = false;
+	Menu::get_option(0)->is_selectable(false);
 }
 
 matrixm::menu::MainMenu::~MainMenu()
 {
-}
-
-void matrixm::menu::MainMenu::show()
-{
-	execute_ = true;
-	int key;
-
-	while(execute_)
-	{
-		color_selected(SELECTED_OPTION_COLOR, NO_SELECTED_COLOR);
-		draw();
-
-		key = _getch();
-
-		if (key != KEY_RETURN)
-			select(key, 1, count());
-		else
-			get_selected()->on_click();
-	}
-}
-
-void matrixm::menu::MainMenu::close()
-{
-	execute_ = false;
 }

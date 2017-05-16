@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "Debuging.h"
 #include "Option.h"
 
@@ -14,7 +16,7 @@ namespace matrixm
 			virtual int selected() const = 0;
 
 			virtual Options* parent() = 0;
-			virtual Option* get_options() const = 0;
+			virtual std::vector<matrixm::menu::Option*> get_options() const = 0;
 			virtual Option* get_selected() = 0;
 
 			virtual void close() = 0;

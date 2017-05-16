@@ -11,6 +11,7 @@
 #include "ReadMenu.h"
 #include "WriteMenu.h"
 #include "SelectMenu.h"
+#include "ChoiceMenu.h"
 
 #include "MatrixMultiply.h"
 #include "MatrixReader.h"
@@ -22,6 +23,26 @@
 #define AMOUT_OF_MATRIX 3
 
 #pragma region menus
+bool matrixm::Program::choice_menu(const std::string& _ask)
+{
+	console::Console::clear();
+	system("cls");
+
+	bool result;
+
+	menu_ = new menu::ChoiceMenu(_ask, menu_);
+	menu_->get_options()[1]->set_on_click_action([this, &result]() { result = true;  this->back(); });
+	menu_->get_options()[2]->set_on_click_action([this, &result]() { result = false;  this->back(); });
+	menu_->show();
+
+	auto parent = menu_->parent();
+	delete menu_;
+	menu_ = parent;
+
+	return result;
+}
+
+
 int matrixm::Program::select_matrix()
 {
 	priv_state_ = state_;
@@ -31,10 +52,10 @@ int matrixm::Program::select_matrix()
 
 	int selected = 0;
 
-	options[1].set_on_click_action([this, &selected]() { selected = 0; back(); });
-	options[2].set_on_click_action([this, &selected]() { selected = 1; back(); });
-	options[3].set_on_click_action([this, &selected]() { selected = 2; back(); });
-	options[4].set_on_click_action([this, &selected]() { back(); selected = -1; });
+	for (int i = 0; i < 3; i++)
+		options[i]->set_on_click_action([this, &selected, i]() { selected = i; back(); });
+
+	options[4]->set_on_click_action([this, &selected]() { back(); selected = -1; });
 
 	console::Console::clear();
 	menu_->show();
@@ -81,6 +102,10 @@ void matrixm::Program::read_file()
 
 void matrixm::Program::read_console()
 {
+	//TODO rewrite this method
+	if ((selected_ = select_matrix()) < 0)
+		return;
+
 	console::Console::clear();
 	system("cls");
 
@@ -111,6 +136,7 @@ void matrixm::Program::read_console()
 				continue;
 			}
 
+			std::cout << std::endl << MSG_SECOUND_DIMENSION_ENTER << std::endl;
 			std::cin >> size.y;
 			
 			if (std::cin.fail())
@@ -170,15 +196,54 @@ void matrixm::Program::read_console()
 
 void matrixm::Program::write_file()
 {
+	if ((selected_ = select_matrix()) < 0)
+		return;
+
 	console::Console::clear();
 	system("cls");
-	std::cout << MSG_SAVE_FILE_ENTER_NAME;
 
-	std::string name;
-	std::cin >> name;
-	std::cout << "\n\n" << MSG_SAVE_SECCESSFULLY << std::endl;
+	try
+	{
+		if (matrix_[selected_] == nullptr)
+			throw matrix::exceptions::MatrixNotInitializedException();
 
-	//matrix_handler_->save(name);
+		std::cout << MSG_SAVE_FILE_ENTER_NAME;
+
+		std::string name;
+		std::cin >> name;
+
+		if (std::ifstream(name))
+		{
+			std::cout << MSG_FILE_ALREADY_EXIST << std::endl;
+			if (!choice_menu(MSG_OVERIDE_FIE))
+			{
+				system("pause");
+				system("cls");
+				return;
+			}
+		}
+
+		std::ofstream file(name, std::ios::trunc);
+
+		if (dynamic_cast<matrix::Matrixll*>(matrix_[selected_]))
+		{
+			std::unique_ptr<matrix::MatrixWriterll> mwriter(new matrix::MatrixWriterll(file));
+			mwriter->write(matrix_[selected_]);
+		}
+		else if (dynamic_cast<matrix::Matrixld*>(matrix_[selected_]))
+		{
+			std::unique_ptr<matrix::MatrixWriterld> mwriter(new matrix::MatrixWriterld(file));
+			mwriter->write(matrix_[selected_]);
+		}
+		else
+			throw matrix::exceptions::MatrixUnknowTypeException();
+
+		std::cout << "\n\n" << MSG_SAVE_SECCESSFULLY << std::endl;
+	}
+	catch(matrix::exceptions::MatrixException& ex)
+	{
+		std::cout << ex.what() << std::endl;
+	}
 
 	system("pause");
 	system("cls");
@@ -192,10 +257,29 @@ void matrixm::Program::write_console()
 	console::Console::clear();
 	system("cls");
 
+	try
+	{
+		if (!matrix_[selected_])
+			throw matrix::exceptions::MatrixNotInitializedException();
+
+		if (dynamic_cast<matrix::Matrixll*>(matrix_[selected_]))
+		{
+			matrix::MatrixWriterll mwriter(std::cout);
+			mwriter.write(matrix_[selected_]);
+		}
+		else if (dynamic_cast<matrix::Matrixld*>(matrix_[selected_]))
+		{
+			matrix::MatrixWriterld mwriter(std::cout);
+			mwriter.write(matrix_[selected_]);
+		}
+	}
+	catch (matrix::exceptions::MatrixException& ex)
+	{
+		std::cout << ex.what() << std::endl;
+	}
+
 	system("pause");
 	system("cls");
-
-	back();
 }
 
 void matrixm::Program::read_menu()
@@ -204,9 +288,9 @@ void matrixm::Program::read_menu()
 	state_ = STATE::READ_MENU;
 	menu_ = new menu::ReadMenu(menu_);
 	auto options = menu_->get_options();
-	options[1].set_on_click_action(std::bind(&Program::read_file, this));
-	options[2].set_on_click_action(std::bind(&Program::read_console, this));
-	options[3].set_on_click_action(std::bind(&Program::back, this));
+	options[1]->set_on_click_action(std::bind(&Program::read_file, this));
+	options[2]->set_on_click_action(std::bind(&Program::read_console, this));
+	options[3]->set_on_click_action(std::bind(&Program::back, this));
 
 	console::Console::clear();
 	menu_->show();
@@ -229,9 +313,9 @@ void matrixm::Program::write_menu()
 	state_ = STATE::WRITE_MENU;
 	menu_ = new menu::WriteMenu(menu_);
 	auto options = menu_->get_options();
-	options[1].set_on_click_action(std::bind(&Program::write_file, this));
-	options[2].set_on_click_action(std::bind(&Program::write_console, this));
-	options[3].set_on_click_action(std::bind(&Program::back, this));
+	options[1]->set_on_click_action(std::bind(&Program::write_file, this));
+	options[2]->set_on_click_action(std::bind(&Program::write_console, this));
+	options[3]->set_on_click_action(std::bind(&Program::back, this));
 
 	console::Console::clear();
 	menu_->show();
@@ -257,11 +341,10 @@ matrixm::Program::Program()
 	priv_state_ = STATE::NONE;
 
 	menu_= new menu::MainMenu();
-	auto options = dynamic_cast<menu::MainMenu&>(*menu_).get_options();
 
-	options[1].set_on_click_action(std::bind(&Program::read_menu, this));
-	options[2].set_on_click_action(std::bind(&Program::write_menu, this));
-	options[5].set_on_click_action(std::bind(&Program::exit, this));
+	dynamic_cast<menu::MainMenu&>(*menu_).get_option(1)->set_on_click_action(std::bind(&Program::read_menu, this));
+	dynamic_cast<menu::MainMenu&>(*menu_).get_option(2)->set_on_click_action(std::bind(&Program::write_menu, this));
+	dynamic_cast<menu::MainMenu&>(*menu_).get_option(5)->set_on_click_action(std::bind(&Program::exit, this));
 
 	matrix_ = new matrix::AbstractMatrix*[AMOUT_OF_MATRIX];
 

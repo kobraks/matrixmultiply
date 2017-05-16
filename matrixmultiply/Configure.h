@@ -41,6 +41,8 @@
 #pragma region KEYS
 #define KEY_DOWN 80																							//Strza³ka w góre
 #define KEY_UP 72																							//Strza³ka w dó³
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
 #define KEY_RETURN 13																						//enter
 #define KEY_0 48																							//0
 #pragma endregion
